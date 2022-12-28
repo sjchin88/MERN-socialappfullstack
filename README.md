@@ -5,12 +5,13 @@ Credit to the following course in Udemy: https://www.udemy.com/course/node-with-
 ## Tools used:
 ### Front End:
 ### Back End:
-CircleCI      - CI/CD platform
-Message Queue - Redis-based message queue
-MongoDB       - for database
-NodeJS        - for Javascript runtime
-Redis         - In-memory cache
-Terraform     - Infrastructure as code tool for AWS
-
+<ul>
+<li> CircleCI      - CI/CD platform </li>
+<li> Message Queue - Redis-based message queue </li>
+<li> MongoDB       - for database </li>
+<li> NodeJS        - for Javascript runtime </li>
+<li> Redis         - In-memory cache </li>
+<li> Terraform     - Infrastructure as code tool for AWS </li>
+</ul>
 
 ## Deployment Instructions:
