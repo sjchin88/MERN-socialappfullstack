@@ -9,8 +9,8 @@ Credit to the following course in Udemy: https://www.udemy.com/course/node-with-
 <li> AWS           - Cloud computing platform </li>
 <li> CircleCI      - CI/CD platform </li>
 <li> Message Queue - Redis-based message queue </li>
-<li> MongoDB       - for database </li>
-<li> NodeJS        - for Javascript runtime </li>
+<li> MongoDB(v6.0.3)       - for database </li>
+<li> NodeJS (v19.3.0)       - for Javascript runtime </li>
 <li> Redis         - In-memory cache </li>
 <li> Terraform     - Infrastructure as code tool for AWS </li>
 </ul>
