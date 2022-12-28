@@ -6,6 +6,7 @@ Credit to the following course in Udemy: https://www.udemy.com/course/node-with-
 ### Front End:
 ### Back End:
 <ul>
+<li> AWS           - Cloud computing platform </li>
 <li> CircleCI      - CI/CD platform </li>
 <li> Message Queue - Redis-based message queue </li>
 <li> MongoDB       - for database </li>
