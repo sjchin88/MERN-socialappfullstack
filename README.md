@@ -11,7 +11,7 @@ Credit to the following course in Udemy: https://www.udemy.com/course/node-with-
 <li> Message Queue - Redis-based message queue </li>
 <li> MongoDB(v6.0.3)       - for database </li>
 <li> NodeJS (v19.3.0)       - for Javascript runtime </li>
-<li> Redis         - In-memory cache </li>
+<li> Redis         - In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) </li>
 <li> Terraform     - Infrastructure as code tool for AWS </li>
 </ul>
 
