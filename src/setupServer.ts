@@ -1,6 +1,4 @@
-import { CustomError, IErrorResponse } from './shared/globals/helpers/error-handler';
 /**Set up the server, like starting the server, add global handler */
-
 import { Application, json, urlencoded, Response, Request, NextFunction } from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -14,8 +12,10 @@ import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
 import Logger from 'bunyan';
 import 'express-async-errors';
-import { config } from './config';
-import applicationRoutes from './routes';
+import { config } from '@root/config';
+import applicationRoutes from '@root/routes';
+import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
+
 
 const SERVER_PORT = 5000;
 /** indicate the error is coming from the server */
@@ -51,7 +51,7 @@ export class ChatServer {
     app.use(helmet());
     app.use(
       cors({
-        origin: config.CLIENT_URL /** asterik for now 
+        origin: config.CLIENT_URL /** asterik for now
                             set to 'http://localhost:3000' for local environment
                                 'https://dev.chatapp.com' for development environment */,
         credentials: true,
@@ -117,7 +117,9 @@ export class ChatServer {
     return io;
   }
 
-  private socketIOConnections(io: Server): void {}
+  private socketIOConnections(io: Server): void {
+    log.info('socketIOConnections');
+  }
 
   private startHttpServer(httpServer: http.Server): void {
     log.info(`Server has started with process ${process.pid}`);

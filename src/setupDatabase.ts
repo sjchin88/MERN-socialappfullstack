@@ -1,6 +1,6 @@
 /**set up mongo db */
 import mongoose from 'mongoose';
-import { config } from './config';
+import { config } from '@root/config';
 import Logger from 'bunyan';
 
 /** indicate the log is coming from the database */
