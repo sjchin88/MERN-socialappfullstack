@@ -16,7 +16,6 @@ import { config } from '@root/config';
 import applicationRoutes from '@root/routes';
 import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
 
-
 const SERVER_PORT = 5000;
 /** indicate the error is coming from the server */
 const log: Logger = config.createLogger('server');
@@ -43,7 +42,7 @@ export class ChatServer {
       cookierSession({
         name: 'session',
         keys: [config.SECRET_KEY_ONE!, config.SECRET_KEY_TWO!],
-        maxAge: 24 * 7 * 3600000 /**amount of time cookie will stay, unit in ms */,
+        maxAge: 7 * 24 * 3600000 /**amount of time cookie will stay, unit in ms */,
         secure: config.NODE_ENV !== 'development' /**can set to false on local machine, once deploy to https , need to set to true */
       })
     );
