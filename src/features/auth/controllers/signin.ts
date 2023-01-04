@@ -1,3 +1,5 @@
+import { resetPasswordTemplate } from '@service/emails/templates/reset-password/reset-password-template';
+import { emailQueue } from '@service/queues/email.queue';
 import JWT from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { config } from '@root/config';
@@ -7,8 +9,10 @@ import { authService } from '@service/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { loginSchema } from '@auth/schemes/signin';
 import { IAuthDocument } from '@auth/interfaces/auth.interface';
-import { IUserDocument } from '@user/interfaces/user.interface';
+import { IResetPasswordParams, IUserDocument } from '@user/interfaces/user.interface';
 import { userService } from '@service/db/user.service';
+import moment from 'moment';
+import publicIP from 'ip';
 
 export class SignIn {
   @joiValidation(loginSchema)
