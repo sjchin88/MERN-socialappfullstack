@@ -15,6 +15,7 @@ import 'express-async-errors';
 import { config } from '@root/config';
 import applicationRoutes from '@root/routes';
 import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
+import { SocketIOPostHandler } from '@socket/post';
 
 const SERVER_PORT = 5000;
 /** indicate the error is coming from the server */
@@ -116,8 +117,14 @@ export class ChatServer {
     return io;
   }
 
+  /**
+   * Create socket io connection
+   *
+   * @param io
+   */
   private socketIOConnections(io: Server): void {
-    log.info('socketIOConnections');
+    const postSocketHandler: SocketIOPostHandler = new SocketIOPostHandler(io);
+    postSocketHandler.listen();
   }
 
   private startHttpServer(httpServer: http.Server): void {

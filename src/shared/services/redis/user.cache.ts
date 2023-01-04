@@ -1,4 +1,4 @@
-import { ServerError } from './../../globals/helpers/error-handler';
+import { ServerError } from '@global/helpers/error-handler';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { BaseCache } from '@service/redis/base.cache';
 import { config } from '@root/config';
@@ -97,7 +97,7 @@ export class UserCache extends BaseCache {
         await this.client.connect();
       }
       await this.client.ZADD('user', { score: parseInt(userUId, 10), value: `${key}` });
-      await this.client.HSET(`users: ${key}`, dataToSave);
+      await this.client.HSET(`users:${key}`, dataToSave);
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error, try again');
