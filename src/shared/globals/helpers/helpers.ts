@@ -38,7 +38,8 @@ export class Helpers {
    */
   static parseJson(prop: string): any {
     try {
-      JSON.parse(prop);
+      const result = JSON.parse(prop);
+      return result;
     } catch (error) {
       return prop;
     }

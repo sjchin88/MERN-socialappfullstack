@@ -2,9 +2,10 @@ import { ServerError } from '@global/helpers/error-handler';
 import { BaseCache } from '@service/redis/base.cache';
 import { config } from '@root/config';
 import Logger from 'bunyan';
-import { IPostDocument, ISavePostToCache, IReactions} from '@post/interfaces/post.interface';
+import { IPostDocument, ISavePostToCache} from '@post/interfaces/post.interface';
 import { Helpers } from '@global/helpers/helpers';
 import { RedisCommandRawReply } from '@redis/client/dist/lib/commands';
+import { IReactions } from '@reaction/interfaces/reaction.interface';
 
 const log: Logger = config.createLogger('postCache');
 
@@ -18,67 +19,37 @@ export class PostCache extends BaseCache {
     super('postCache');
   }
 
+  /**
+   * Save post data to the Redis Cache
+   * @param data post data of form ISavePostToCache
+   */
   public async savePostToCache(data: ISavePostToCache): Promise<void> {
+    //Decompose the arguments from the input argument data
     const { key, currentUserId, uId, createdPost } = data;
+    //Decompose the arguments from one of the argument (createdPost) above
     const {
-      _id,
-      userId,
-      username,
-      email,
-      avatarColor,
-      profilePicture,
-      post,
-      bgColor,
-      feelings,
-      privacy,
-      gifUrl,
-      commentsCount,
-      imgVersion,
-      imgId,
-      reactions,
-      createdAt
+      _id, userId, username, email, avatarColor, profilePicture, post, bgColor, feelings,
+      privacy, gifUrl, commentsCount, imgVersion, imgId, reactions, createdAt
     } = createdPost;
 
+    //Constructing first list of string
     const firstList: string[] = [
-      '_id',
-      `${_id}`,
-      'userId',
-      `${userId}`,
-      'username',
-      `${username}`,
-      'email',
-      `${email}`,
-      'avatarColor',
-      `${avatarColor}`,
-      'profilePicture',
-      `${profilePicture}`,
-      'post',
-      `${post}`,
-      'bgColor',
-      `${bgColor}`,
-      'feelings',
-      `${feelings}`,
-      'privacy',
-      `${privacy}`,
-      'gifUrl',
-      `${gifUrl}`
+      '_id', `${_id}`, 'userId', `${userId}`, 'username', `${username}`,
+      'email', `${email}`, 'avatarColor', `${avatarColor}`, 'profilePicture', `${profilePicture}`,
+      'post', `${post}`, 'bgColor', `${bgColor}`, 'feelings', `${feelings}`,
+      'privacy', `${privacy}`, 'gifUrl', `${gifUrl}`
     ];
 
+    //Constructing second list of string, note objects are being stringify
     const secondList: string[] = [
-      'commentsCount',
-      `${commentsCount}`,
-      'reactions',
-      JSON.stringify(reactions),
-      'imgVersion',
-      `${imgVersion}`,
-      'imgId',
-      `${imgId}`,
-      'createdAt',
-      `${createdAt}`
+      'commentsCount', `${commentsCount}`, 'reactions', JSON.stringify(reactions),
+      'imgVersion', `${imgVersion}`, 'imgId', `${imgId}`, 'createdAt', `${createdAt}`
     ];
+    //Construct the dataToSave as list of strings
     const dataToSave: string[] = [...firstList, ...secondList];
 
     try {
+      //Check if the client is open
       if (!this.client.isOpen) {
         await this.client.connect();
       }
@@ -86,7 +57,9 @@ export class PostCache extends BaseCache {
       const postCount: string[] = await this.client.HMGET(`users:${currentUserId}`, 'postsCount');
       //Use multi() to create multiple redis command and execute all the methods
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
+      //Add to the sorted set with key 'post' , with uId as score and key as value
       await this.client.ZADD('post', { score: parseInt(uId, 10), value: `${key}` });
+      //Set the field and value pairs in dataToSave to the key posts:key
       multi.HSET(`posts:${key}`, dataToSave);
       //increment the count
       const count: number = parseInt(postCount[0], 10) + 1;
