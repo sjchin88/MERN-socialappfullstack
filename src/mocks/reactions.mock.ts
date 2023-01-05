@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { AuthPayload } from '@auth/interfaces/auth.interface';
 import { IReactionDocument, IReactions } from '@reaction/interfaces/reaction.interface';
 import { IJWT } from './auth.mock';
+import { ICommentDocument, ICommentNameList } from '@comment/interfaces/comment.interface';
 //import { ICommentDocument, ICommentNameList } from '@comment/interfaces/comment.interface';
 
 export const reactionMockRequest = (sessionData: IJWT, body: IBody, currentUser?: AuthPayload | null, params?: IParams) => ({
@@ -49,7 +50,7 @@ export const reactionData: IReactionDocument = {
   type: 'love'
 } as IReactionDocument;
 
-/* export const commentsData: ICommentDocument = {
+export const commentsData: ICommentDocument = {
   _id: '6064861bc25eaa5a5d2f9bf4',
   username: 'Danny',
   avatarColor: '#9c27b0',
@@ -63,4 +64,4 @@ export const reactionData: IReactionDocument = {
 export const commentNames: ICommentNameList = {
   count: 1,
   names: ['Danny']
-}; */
+};

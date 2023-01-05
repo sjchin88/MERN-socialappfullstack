@@ -1,3 +1,5 @@
+import { ICommentDocument } from '@comment/interfaces/comment.interface';
+import { IReactionDocument } from '@reaction/interfaces/reaction.interface';
 import { Server, Socket } from 'socket.io';
 
 // Use this to emit the event inside the controller outside the socketioposthandler class
@@ -16,8 +18,17 @@ export class SocketIOPostHandler {
 
   public listen(): void {
     this.io.on('connection', (socket: Socket) => {
-      //TODO change later
-      console.log('Post socketio handler');
+      //listen for new reaction
+      socket.on('reaction', (reaction: IReactionDocument) => {
+        //listen for all users response
+        this.io.emit('update like', reaction);
+      });
+
+      //Listen for new comment
+      socket.on('comment', (data: ICommentDocument) => {
+        //listen for all users response
+        this.io.emit('update comment', data);
+      });
     });
   }
 }

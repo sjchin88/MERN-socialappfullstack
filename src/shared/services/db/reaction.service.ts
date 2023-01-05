@@ -1,5 +1,4 @@
 import { Helpers } from '@global/helpers/helpers';
-import { ObjectId } from 'mongodb';
 import { UserCache } from '@service/redis/user.cache';
 import { IReactionJob, IReactionDocument, IQueryReaction } from '@reaction/interfaces/reaction.interface';
 import { ReactionModel } from '@reaction/models/reaction.schema';
