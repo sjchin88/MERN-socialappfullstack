@@ -16,6 +16,8 @@ import { config } from '@root/config';
 import applicationRoutes from '@root/routes';
 import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
 import { SocketIOPostHandler } from '@socket/post';
+import { SocketIOFollowerHandler } from '@socket/follower';
+import { SocketIOUserHandler } from '@socket/user';
 
 const SERVER_PORT = 5000;
 /** indicate the error is coming from the server */
@@ -124,7 +126,12 @@ export class ChatServer {
    */
   private socketIOConnections(io: Server): void {
     const postSocketHandler: SocketIOPostHandler = new SocketIOPostHandler(io);
+    const followSocketHandler: SocketIOFollowerHandler = new SocketIOFollowerHandler(io);
+    const userSocketHandler: SocketIOUserHandler = new SocketIOUserHandler(io);
+
     postSocketHandler.listen();
+    followSocketHandler.listen();
+    userSocketHandler.listen();
   }
 
   private startHttpServer(httpServer: http.Server): void {
