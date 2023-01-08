@@ -44,4 +44,9 @@ export class Helpers {
       return prop;
     }
   }
+
+  static isDataNotUrl(value: string): boolean {
+    const dataImageReges = /^\s*data:([a-z]+\/[a-z0-9-+.]+(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\\/?%\s]*)\s*$/i;
+    return dataImageReges.test(value);
+  }
 }
