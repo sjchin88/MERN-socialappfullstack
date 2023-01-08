@@ -19,6 +19,7 @@ import { SocketIOPostHandler } from '@socket/post';
 import { SocketIOFollowerHandler } from '@socket/follower';
 import { SocketIOUserHandler } from '@socket/user';
 import { SocketIONotificationHandler } from '@socket/notification';
+import { SocketIOImageHandler } from '@socket/image';
 
 const SERVER_PORT = 5000;
 /** indicate the error is coming from the server */
@@ -130,11 +131,13 @@ export class ChatServer {
     const followSocketHandler: SocketIOFollowerHandler = new SocketIOFollowerHandler(io);
     const userSocketHandler: SocketIOUserHandler = new SocketIOUserHandler(io);
     const notificationSocketHandler: SocketIONotificationHandler = new SocketIONotificationHandler();
+    const imageSocketHandler: SocketIOImageHandler = new SocketIOImageHandler();
 
     postSocketHandler.listen();
     followSocketHandler.listen();
     userSocketHandler.listen();
     notificationSocketHandler.listen(io);
+    imageSocketHandler.listen(io);
   }
 
   private startHttpServer(httpServer: http.Server): void {

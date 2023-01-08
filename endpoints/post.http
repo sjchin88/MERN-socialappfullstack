@@ -12,7 +12,7 @@ withCredentials: true
   "bgColor": "#4aa1f3",
   "privacy": "Public",
   "gifUrl": "",
-  "profilePicture": "https://res/cloudinary.com/dlf1ttson/image/upload/v1672688643/63b334031f0b5d2fd74478d9",
+  "profilePicture": "https://res.cloudinary.com/dlf1ttson/image/upload/v1672688643/63b334031f0b5d2fd74478d9",
   "feelings": "happy"
 }
 
@@ -27,7 +27,7 @@ withCredentials: true
   "bgColor": "#4aa1f3",
   "privacy": "Public",
   "gifUrl": "",
-  "profilePicture": "https://res/cloudinary.com/dlf1ttson/image/upload/v1672688643/63b334031f0b5d2fd74478d9",
+  "profilePicture": "https://res.cloudinary.com/dlf1ttson/image/upload/v1672688643/63b334031f0b5d2fd74478d9",
   "feelings": "happy",
   "image": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA2MzEuMDg1MjMgNTkxLjM5MDI1IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTQ1LjgzIC04NS42MjIpIj4KICA8ZyBzdHJva2U9IiMwMDAiPgogICA8cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCguODMxNzkgLjU1NTA5IC0uNTU1MDkgLjgzMTc5IDYyLjYzMyAtMTU1LjQpIiBkPSJtNzEyLjE0IDEyMy4wMWM4MC40NDcgODcuODIgNjguNjU0IDIyNy40NC0xOC4zNTcgMzA2LjIyLTk2LjY0IDg3LjUtMjQ5LjQ5IDc0LjI4LTMzNS4zNy0yMS41MS05NC41Ni0xMDUuNDctNzkuOTEtMjcxLjU0IDI0LjY2LTM2NC41MyAxMTQuMjgtMTAxLjYzIDI5My42LTg1LjU0NyAzOTMuNjkgMjcuODExIDEwOC42OSAxMjMuMSA5MS4xOCAzMTUuNjYtMzAuOTcgNDIyLjg0LTEzMS45MSAxMTUuNzYtMzM3LjcyIDk2LjgxNi00NTItMzQuMTE3LTEuODY0OS0yLjEzNjYtMy43MDIzLTQuMjk3Mi01LjUxMTYtNi40ODEiIGZpbGw9Im5vbmUiIHN0cm9rZS13aWR0aD0iMTAiLz4KICAgPGVsbGlwc2UgY3g9IjI4NS43NyIgY3k9IjM3NC42NyIgcng9IjM3Ljk0MiIgcnk9IjQwLjE3NCIgZD0ibSAzMjMuNzExOTksMzc0LjY3MDAxIGMgMCwyMi4xODc0OSAtMTYuOTg3MjEsNDAuMTc0IC0zNy45NDIsNDAuMTc0IC0yMC45NTQ3OSwwIC0zNy45NDIsLTE3Ljk4NjUxIC0zNy45NDIsLTQwLjE3NCAwLC0yMi4xODc0OCAxNi45ODcyMSwtNDAuMTc0IDM3Ljk0MiwtNDAuMTc0IDIwLjk1NDc5LDAgMzcuOTQyLDE3Ljk4NjUyIDM3Ljk0Miw0MC4xNzQgeiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjE1LjU2MSIvPgogICA8ZWxsaXBzZSBjeD0iNDc0LjQxIiBjeT0iMzY5LjU2IiByeD0iMzcuOTQyIiByeT0iNDAuMTc0IiBkPSJtIDUxMi4zNTIwMSwzNjkuNTYgYyAwLDIyLjE4NzQ4IC0xNi45ODcyMiw0MC4xNzQgLTM3Ljk0MjAxLDQwLjE3NCAtMjAuOTU0NzksMCAtMzcuOTQyLC0xNy45ODY1MiAtMzcuOTQyLC00MC4xNzQgMCwtMjIuMTg3NDkgMTYuOTg3MjEsLTQwLjE3NCAzNy45NDIsLTQwLjE3NCAyMC45NTQ3OSwwIDM3Ljk0MjAxLDE3Ljk4NjUxIDM3Ljk0MjAxLDQwLjE3NCB6IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS13aWR0aD0iMTUuNTYxIi8+CiAgPC9nPgogPC9nPgo8L3N2Zz4K"
 }
@@ -63,7 +63,7 @@ withCredentials: true
   "bgColor": "#4aa1f3",
   "privacy": "Public",
   "gifUrl": "",
-  "profilePicture": "https://res/cloudinary.com/dlf1ttson/image/upload/v1672688643/63b334031f0b5d2fd74478d9",
+  "profilePicture": "https://res.cloudinary.com/dlf1ttson/image/upload/v1672688643/63b334031f0b5d2fd74478d9",
   "feelings": "sad",
   "imgId":"",
   "imgVersion":""

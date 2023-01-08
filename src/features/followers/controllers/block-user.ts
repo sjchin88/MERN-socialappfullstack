@@ -1,16 +1,11 @@
-import { blockedUserQueue } from './../../../shared/services/queues/blocked.queue';
-
-import { UserCache } from '@service/redis/user.cache';
+import { blockedUserQueue } from '@service/queues/blocked.queue';
 import HTTP_STATUS from 'http-status-codes';
 import { Request, Response } from 'express';
-import { ObjectId } from 'mongodb';
 import { FollowerCache } from '@service/redis/follower.cache';
-import { IUserDocument } from '@user/interfaces/user.interface';
-import mongoose from 'mongoose';
-import { socketIOFollowerObject } from '@socket/follower';
+
 
 const followerCache: FollowerCache = new FollowerCache();
-const userCache: UserCache = new UserCache();
+
 
 export class AddUser {
   public async block(req: Request, res: Response): Promise<void> {
