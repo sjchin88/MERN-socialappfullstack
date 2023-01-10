@@ -1,10 +1,44 @@
+import { followerService } from '@service/db/follower.service';
 import mongoose from 'mongoose';
-import { IUserDocument } from '@user/interfaces/user.interface';
+import { IBasicInfo, ISearchUser, ISocialLinks, IUserDocument, INotificationSettings } from '@user/interfaces/user.interface';
 import { UserModel } from '@user/models/user.schema';
+import { indexOf } from 'lodash';
+import { AuthModel } from '@auth/models/auth.schema';
 
 class UserService {
   public async addUserData(data: IUserDocument): Promise<void> {
     await UserModel.create(data);
+  }
+
+  public async updatePassword(username: string, hashedPassword: string): Promise<void> {
+    await AuthModel.updateOne({ username }, { $set: { password: hashedPassword }}).exec();
+  }
+
+  public async updateUserInfo(userId: string, info: IBasicInfo): Promise<void> {
+    await UserModel.updateOne(
+      { _id: userId },
+      {
+        $set: {
+          work: info['work'],
+          school: info['school'],
+          quote: info['quote'],
+          location: info['location'],
+      }}
+    ).exec();
+  }
+
+  public async updateSocialLinks(userId: string, links: ISocialLinks): Promise<void> {
+    await UserModel.updateOne(
+      { _id: userId },
+      {
+        $set: {
+          social: links
+      }}
+    ).exec();
+  }
+
+  public async updateNotificationSettings(userId: string, settings: INotificationSettings): Promise<void> {
+    await UserModel.updateOne({ _id: userId }, { $set: { notifications: settings }}).exec();
   }
 
   public async getUserById(userId: string): Promise<IUserDocument> {
@@ -30,6 +64,88 @@ class UserService {
     return users[0];
   }
 
+  /**
+   * Get users based on parameters
+   * @param userId
+   * @param skip how many items we want to skip
+   * @param limit limit on how many to retrieve at one time
+   * @returns
+   */
+  public async getAllUsers(userId: string, skip: number, limit: number): Promise<IUserDocument[]> {
+    const users: IUserDocument[] = await UserModel.aggregate([
+      //Return every other documents not equal to userId using the $ne operator
+      { $match: { _id: { $ne: new mongoose.Types.ObjectId(userId) } } },
+      { $skip: skip },
+      { $limit: limit },
+      { $sort: { createdAt: -1 }},
+      { $lookup: { from: 'Auth', localField: 'authId', foreignField: '_id', as: 'authId' } },
+      { $unwind: '$authId' },
+      { $project: this.aggregateProject() }
+    ]);
+    return users;
+  }
+
+  public async getRandomUsers(userId: string): Promise<IUserDocument[]> {
+    const randomUsers: IUserDocument[] = [];
+    const users: IUserDocument[] = await UserModel.aggregate([
+      //Return every other documents not equal to userId using the $ne operator
+      { $match: { _id: { $ne: new mongoose.Types.ObjectId(userId) } } },
+      { $lookup: { from: 'Auth', localField: 'authId', foreignField: '_id', as: 'authId' } },
+      { $unwind: '$authId' },
+      { $sample: { size: 10 }},
+      {
+        $addFields: {
+          username: '$authId.username',
+          email: '$authId.email',
+          avatarColor: '$authId.avatarColor',
+          uId: '$authId.uId',
+          createdAt: '$authId.createdAt',
+        }
+      },
+      {
+        $project: {
+          authId: 0,
+          __v: 0
+        }
+      }
+    ]);
+    //
+    const followers: string[] = await followerService.getFollowersIds(`${userId}`);
+    for (const user of users) {
+      const followerIndex = indexOf(followers, user._id.toString());
+      if (followerIndex < 0) {
+        randomUsers.push(user);
+      }
+    }
+    return randomUsers;
+  }
+  /**
+   * Get the total number of users in the database
+   * @returns total number of user
+   */
+  public async getTotalUsersInDB(): Promise<number> {
+    const totalCount: number = await UserModel.find({}).countDocuments();
+    return totalCount;
+  }
+
+  public async searchUsers(regex: RegExp): Promise<ISearchUser[]> {
+    const users = await AuthModel.aggregate([
+      //Return every other documents not equal to userId using the $ne operator
+      { $match: { username: regex } } ,
+      { $lookup: { from: 'User', localField: '_id', foreignField: 'authId', as: 'user' } },
+      { $unwind: '$user' },
+      {
+        $project: {
+          _id: '$user._id',
+          username: 1,
+          email: 1,
+          avatarColor: 1,
+          profilePicture: 1
+        }
+      }
+    ]);
+    return users;
+  }
   /**
    * value 0 means it will be excluded
    * value 1 means it will be included and returned

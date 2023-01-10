@@ -11,6 +11,7 @@ import { IUserDocument } from '@user/interfaces/user.interface';
 import { UserModel } from '@user/models/user.schema';
 import { ObjectId, BulkWriteResult } from 'mongodb';
 import mongoose, { Query } from 'mongoose';
+import { map } from 'lodash';
 
 const userCache: UserCache = new UserCache();
 
@@ -108,6 +109,11 @@ class FollowerService{
     await Promise.all([unfollow, users]);
   }
 
+  /**
+   * Return all users being followed by the user
+   * @param userObjectId objectId of user
+   * @returns IFollowerData[]
+   */
   public async getFolloweeData(userObjectId: ObjectId): Promise<IFollowerData[]> {
     const followee: IFollowerData[] = await FollowerModel.aggregate([
       { $match: { followerId: userObjectId } },
@@ -142,6 +148,11 @@ class FollowerService{
     return followee;
   }
 
+  /**
+   * Return all followers for the particular user
+   * @param userObjectId  objectId of user
+   * @returns IFollowerData[]
+   */
   public async getFollowerData(userObjectId: ObjectId): Promise<IFollowerData[]> {
     const follower: IFollowerData[] = await FollowerModel.aggregate([
       { $match: { followeeId: userObjectId } },
@@ -174,6 +185,19 @@ class FollowerService{
       }
     ]);
     return follower;
+  }
+
+  public async getFollowersIds(userId: string): Promise<string[]> {
+    const follower = await FollowerModel.aggregate([
+      { $match: { followeeId: new mongoose.Types.ObjectId(userId) }},
+      {
+        $project: {
+          followerId: 1,
+          _id: 0
+        }
+      }
+    ]);
+    return map(follower, (result) => result.followerId.toString());
   }
 }
 

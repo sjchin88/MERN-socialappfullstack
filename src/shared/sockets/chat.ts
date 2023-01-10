@@ -1,3 +1,4 @@
+import { connectedUsersMap } from '@socket/user';
 import { ISenderReceiver } from '@chat/interfaces/chat.interface';
 import { Server, Socket } from 'socket.io';
 
@@ -18,8 +19,12 @@ export class SocketIOChatHandler {
   public listen(): void {
     this.io.on('connection', (socket: Socket) => {
       //listen for new reaction
-      socket.on('join room', (data: ISenderReceiver) => {
-        console.log();
+      socket.on('join room', (users: ISenderReceiver) => {
+        const { senderName, receiverName } = users;
+        const senderSocketId = connectedUsersMap.get(senderName) as string;
+        const receiverSocketId = connectedUsersMap.get(receiverName) as string;
+        socket.join(senderSocketId);
+        socket.join(receiverSocketId);
       });
     });
   }
