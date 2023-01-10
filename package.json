@@ -4,14 +4,18 @@
   "description": "A social media application based on MERN (Mongo DB, Express, React, Node.js)\r Credit to the following course in Udemy: https://www.udemy.com/course/node-with-react-build-deploy-a-fullstack-web-application/",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon ./build/app.js",
+    "start": "set NODE_ENV=production&&pm2 start ./build/src/app.js -i 5 --attach --watch | bunyan",
+    "stop": "pm2 stop all",
+    "delete": "pm2 delete all",
     "dev": "nodemon -r tsconfig-paths/register src/app.ts | bunyan",
     "lint:check": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "prettier:check": "prettier --check \"src/**/*.{ts,json}\"",
     "prettier:fix": "prettier --write \"src/**/*.{ts,json}\"",
     "build": "ttsc -p .",
-    "test": "jest --coverage=true -w=1 --forceExit --detectOpenHandles --watchAll=false"
+    "test": "jest --coverage=true -w=1 --forceExit --detectOpenHandles --watchAll=false",
+    "seeds:dev": "npx ts-node src/seeds.ts",
+    "seeds:prod": "npx ts-node ./build/src/seeds.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +31,7 @@
   "dependencies": {
     "@bull-board/express": "^4.10.0",
     "@bull-board/ui": "^4.10.0",
+    "@faker-js/faker": "^7.6.0",
     "@jest/types": "^29.3.1",
     "@sendgrid/mail": "^7.7.0",
     "@socket.io/redis-adapter": "^8.0.0",
@@ -36,6 +41,7 @@
     "bull": "^4.10.2",
     "bullmq": "^3.5.2",
     "bunyan": "^1.8.15",
+    "canvas": "^2.11.0",
     "cloudinary": "^1.33.0",
     "compression": "^1.7.4",
     "cookie-session": "^2.0.0",
@@ -56,6 +62,7 @@
     "nodemailer": "^6.8.0",
     "redis": "^4.5.1",
     "socket.io": "^4.5.4",
+    "swagger-stats": "^0.99.4",
     "ttypescript": "^1.5.15",
     "typescript": "^4.9.4",
     "typescript-transform-paths": "^3.4.4"
@@ -75,6 +82,7 @@
     "@types/lodash": "^4.14.191",
     "@types/nodemailer": "^6.4.7",
     "@types/redis-info": "^3.0.0",
+    "@types/swagger-stats": "^0.95.7",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",
     "eslint": "^8.31.0",
