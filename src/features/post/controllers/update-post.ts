@@ -1,6 +1,6 @@
 import { BadRequestError } from '@global/helpers/error-handler';
 import { IPostDocument } from '@post/interfaces/post.interface';
-import { postSchema, postWithImageSchema } from '@post/schemes/post.schemes';
+import { postSchema, postWithImageSchema, postWithVideoSchema } from '@post/schemes/post.schemes';
 import HTTP_STATUS from 'http-status-codes';
 import { Request, Response } from 'express';
 import { PostCache } from '@service/redis/post.cache';
@@ -8,7 +8,7 @@ import { postQueue } from '@service/queues/post.queue';
 import { socketIOPostObject } from '@socket/post';
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
 import { UploadApiResponse } from 'cloudinary';
-import { uploads } from '@global/helpers/cloudinary-upload';
+import { uploads, videoUpload } from '@global/helpers/cloudinary-upload';
 import { imageQueue } from '@service/queues/image.queue';
 
 const postCache: PostCache = new PostCache();
@@ -16,7 +16,7 @@ const postCache: PostCache = new PostCache();
 export class Update {
   @joiValidation(postSchema)
   public async posts(req: Request, res: Response): Promise<void> {
-    const { post, bgColor, feelings, privacy, gifUrl, imgVersion, imgId, profilePicture } = req.body;
+    const { post, bgColor, feelings, privacy, gifUrl, imgVersion, imgId, profilePicture, videoId, videoVersion } = req.body;
     const { postId } = req.params;
     const updatedPost: IPostDocument = {
       post,
@@ -26,7 +26,9 @@ export class Update {
       gifUrl,
       profilePicture,
       imgId,
-      imgVersion
+      imgVersion,
+      videoId,
+      videoVersion
     } as IPostDocument;
     const postUpdated = await postCache.updatePostInCache(postId, updatedPost);
     //emit event
@@ -42,11 +44,11 @@ export class Update {
     const { imgId, imgVersion } = req.body;
     if (imgId && imgVersion) {
       //user reuse the same image
-      Update.prototype.updatePostWithImage(req);
+      Update.prototype.updatePost(req);
     } else {
       //user upload a new image
-      const result: UploadApiResponse = await Update.prototype.addImageToExistingPost(req);
-      if(!result.public_id) {
+      const result: UploadApiResponse = await Update.prototype.addFileToExistingPost(req);
+      if (!result.public_id) {
         throw new BadRequestError(result.message);
       }
     }
@@ -54,8 +56,25 @@ export class Update {
     res.status(HTTP_STATUS.OK).json({ message: 'Post with image updated successfully' });
   }
 
-  private async updatePostWithImage(req:Request): Promise<void> {
-    const { post, bgColor, feelings, privacy, gifUrl, imgVersion, imgId, profilePicture } = req.body;
+  @joiValidation(postWithVideoSchema)
+  public async postWithVideo(req: Request, res: Response): Promise<void> {
+    const { videoId, videoVersion } = req.body;
+    if (videoId && videoVersion) {
+      //user reuse the same video
+      Update.prototype.updatePost(req);
+    } else {
+      //user upload a new image
+      const result: UploadApiResponse = await Update.prototype.addFileToExistingPost(req);
+      if (!result.public_id) {
+        throw new BadRequestError(result.message);
+      }
+    }
+    //update res.status
+    res.status(HTTP_STATUS.OK).json({ message: 'Post with video updated successfully' });
+  }
+
+  private async updatePost(req: Request): Promise<void> {
+    const { post, bgColor, feelings, privacy, gifUrl, imgVersion, imgId, profilePicture, videoId, videoVersion } = req.body;
     const { postId } = req.params;
     const updatedPost: IPostDocument = {
       post,
@@ -64,8 +83,10 @@ export class Update {
       privacy,
       gifUrl,
       profilePicture,
-      imgId,
-      imgVersion
+      imgId: imgId ? imgId : '',
+      imgVersion: imgVersion ? imgVersion : '',
+      videoId: videoId ? videoId : '',
+      videoVersion: videoVersion ? videoVersion : ''
     } as IPostDocument;
     const postUpdated = await postCache.updatePostInCache(postId, updatedPost);
     //emit event
@@ -75,10 +96,18 @@ export class Update {
     //update res.status
   }
 
-  private async addImageToExistingPost(req:Request): Promise<UploadApiResponse> {
-    const { post, bgColor, feelings, privacy, gifUrl, profilePicture, image } = req.body;
+  /**
+   * Add either video or image file to existing post
+   * @param req contain information required
+   * @returns UploadApiResponse from cloudinary
+   */
+  private async addFileToExistingPost(req: Request): Promise<UploadApiResponse> {
+    const { post, bgColor, feelings, privacy, gifUrl, profilePicture, image, video } = req.body;
     const { postId } = req.params;
-    const result: UploadApiResponse = (await uploads(image)) as UploadApiResponse;
+    const isAddingImg: boolean = image ? true : false;
+    const result: UploadApiResponse = isAddingImg
+      ? ((await uploads(image)) as UploadApiResponse)
+      : ((await videoUpload(video)) as UploadApiResponse);
     if (!result?.public_id) {
       return result;
     }
@@ -89,15 +118,24 @@ export class Update {
       privacy,
       gifUrl,
       profilePicture,
-      imgId: result.public_id,
-      imgVersion: result.version.toString()
+      imgId: isAddingImg ? result.public_id : '',
+      imgVersion: isAddingImg ? result.version.toString() : '',
+      videoId: !isAddingImg ? result.public_id : '',
+      videoVersion: !isAddingImg ? result.version.toString() : '',
     } as IPostDocument;
+
     const postUpdated: IPostDocument = await postCache.updatePostInCache(postId, updatedPost);
     //emit event
     socketIOPostObject.emit('update post', postUpdated, 'posts');
     //add job to queue
     postQueue.addPostJob('updatePostInDB', { key: postId, value: postUpdated });
-    imageQueue.addImageJob('addImageToDB', { key: `${req.currentUser!.userId}`, imgId: result.public_id, imgVersion: result.version.toString()});
+    if(isAddingImg){
+      imageQueue.addImageJob('addImageToDB', {
+        key: `${req.currentUser!.userId}`,
+        imgId: result.public_id,
+        imgVersion: result.version.toString()
+      });
+    }
     return result;
   }
 }

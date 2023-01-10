@@ -2,16 +2,6 @@ import { IReactions } from '@root/features/reactions/interfaces/reaction.interfa
 import { ObjectId } from 'mongodb';
 import mongoose, { Document } from 'mongoose';
 
-/* //move to reaction later
-export interface IReactions {
-  like: number;
-  love: number;
-  happy: number;
-  wow: number;
-  sad: number;
-  angry: number;
-} */
-
 export interface IPostDocument extends Document {
   _id?: string | mongoose.Types.ObjectId;
   userId: string;
@@ -24,6 +14,8 @@ export interface IPostDocument extends Document {
   commentsCount: number;
   imgVersion?: string;
   imgId?: string;
+  videoVersion?: string;
+  videoId?: string;
   feelings?: string;
   gifUrl?: string;
   privacy?: string;
@@ -35,6 +27,7 @@ export interface IGetPostsQuery {
   _id?: ObjectId | string;
   username?: string;
   imgId?: string;
+  videoId?: string;
   gifUrl?: string;
 }
 

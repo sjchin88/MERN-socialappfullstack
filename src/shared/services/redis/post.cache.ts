@@ -29,7 +29,7 @@ export class PostCache extends BaseCache {
     //Decompose the arguments from one of the argument (createdPost) above
     const {
       _id, userId, username, email, avatarColor, profilePicture, post, bgColor, feelings,
-      privacy, gifUrl, commentsCount, imgVersion, imgId, reactions, createdAt
+      privacy, gifUrl, commentsCount, imgVersion, imgId, videoVersion, videoId, reactions, createdAt
     } = createdPost;
 
     //Constructing first list of string
@@ -43,8 +43,10 @@ export class PostCache extends BaseCache {
     //Constructing second list of string, note objects are being stringify
     const secondList: string[] = [
       'commentsCount', `${commentsCount}`, 'reactions', JSON.stringify(reactions),
-      'imgVersion', `${imgVersion}`, 'imgId', `${imgId}`, 'createdAt', `${createdAt}`
+      'imgVersion', `${imgVersion}`, 'imgId', `${imgId}`,
+      'videoVersion', `${videoVersion}`, 'videoId', `${videoId}`,'createdAt', `${createdAt}`
     ];
+
     //Construct the dataToSave as list of strings
     const dataToSave: string[] = [...firstList, ...secondList];
 
@@ -163,6 +165,35 @@ export class PostCache extends BaseCache {
     }
   }
 
+  public async getPostsWithVideosFromCache(key: string, start: number, end: number): Promise<IPostDocument[]> {
+    try {
+      if (!this.client.isOpen) {
+        await this.client.connect();
+      }
+
+      const reply: string[] = await this.client.ZRANGE(key, start, end, { REV: true });
+      //Use multi() to create multiple redis command and execute all the methods
+      const multi: ReturnType<typeof this.client.multi> = this.client.multi();
+      for (const value of reply) {
+        multi.HGETALL(`posts:${value}`);
+      }
+      const replies: PostCacheMultiType = await multi.exec() as PostCacheMultiType;
+      const postWithVideos: IPostDocument[] = [];
+      for (const post of replies as IPostDocument[]) {
+        if((post.videoId && post.videoVersion) || post.gifUrl ) {
+          post.commentsCount = Helpers.parseJson(`${post.commentsCount}`) as number;
+          post.reactions = Helpers.parseJson(`${post.reactions}`) as IReactions;
+          post.createdAt = new Date(Helpers.parseJson(`${post.createdAt}`));
+          postWithVideos.push(post);
+        }
+      }
+      return postWithVideos;
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Server error. Try again.');
+    }
+  }
+
   /**
    * Get all posts for one user
    * @param key
@@ -246,7 +277,7 @@ export class PostCache extends BaseCache {
   }
 
   public async updatePostInCache(key: string, updatedPost: IPostDocument): Promise<IPostDocument> {
-    const { post, bgColor, feelings, privacy, gifUrl, imgVersion, imgId, profilePicture } = updatedPost;
+    const { post, bgColor, feelings, privacy, gifUrl, imgVersion, imgId, videoVersion, videoId, profilePicture } = updatedPost;
     const firstList: string[] = [
       'post',
       `${post}`,
@@ -266,7 +297,11 @@ export class PostCache extends BaseCache {
       'imgVersion',
       `${imgVersion}`,
       'imgId',
-      `${imgId}`
+      `${imgId}`,
+      'videoVersion',
+      `${videoVersion}`,
+      'videoId',
+      `${videoId}`
     ];
     const dataToSave: string[] = [...firstList, ...secondList];
 
