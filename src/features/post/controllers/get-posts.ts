@@ -42,4 +42,17 @@ export class Get {
     posts = cachedPosts.length ? cachedPosts: await postService.getPosts({ imgId: '$ne', gifUrl: '$ne'}, skip, limit, { createdAt: -1 });
     res.status(HTTP_STATUS.OK).json({ message: 'All posts with images', posts });
   }
+
+  public async postsWithVideo(req: Request, res: Response): Promise<void> {
+    const { page } = req.params;
+    //set number of item to skip , for page 1 will be first 10 (PAGE_SIZE)
+    const skip: number = (parseInt(page) - 1) * PAGE_SIZE;
+    const limit: number = PAGE_SIZE * parseInt(page);
+    //newSkip for redis
+    const newSkip: number = skip === 0 ? skip : skip + 1;
+    let posts: IPostDocument[] = [];
+    const cachedPosts: IPostDocument[] = await postCache.getPostsWithVideosFromCache('post', newSkip, limit);
+    posts = cachedPosts.length ? cachedPosts: await postService.getPosts({ videoId: '$ne'}, skip, limit, { createdAt: -1 });
+    res.status(HTTP_STATUS.OK).json({ message: 'All posts with videos', posts });
+  }
 }

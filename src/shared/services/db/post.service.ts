@@ -25,6 +25,9 @@ class PostService {
     if (query?.imgId && query?.gifUrl) {
       //Get all document where imgId is not empty or gifUrl is not empty
       postQuery = { $or: [{imgId: { $ne: ' '} }, { gifUrl: { $ne: '' } }] };
+    } else if (query?.videoId) {
+      //Get all document where videoId is not empty
+      postQuery = { $or: [{videoId: { $ne: ' '} }] };
     } else {
       postQuery = query;
     }
