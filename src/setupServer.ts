@@ -1,6 +1,4 @@
-import { CustomError, IErrorResponse } from './shared/globals/helpers/error-handler';
 /**Set up the server, like starting the server, add global handler */
-
 import { Application, json, urlencoded, Response, Request, NextFunction } from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -13,9 +11,17 @@ import { Server } from 'socket.io';
 import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
 import Logger from 'bunyan';
+import apiStats from 'swagger-stats';
 import 'express-async-errors';
-import { config } from './config';
-import applicationRoutes from './routes';
+import { config } from '@root/config';
+import applicationRoutes from '@root/routes';
+import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
+import { SocketIOPostHandler } from '@socket/post';
+import { SocketIOFollowerHandler } from '@socket/follower';
+import { SocketIOUserHandler } from '@socket/user';
+import { SocketIONotificationHandler } from '@socket/notification';
+import { SocketIOImageHandler } from '@socket/image';
+import { SocketIOChatHandler } from '@socket/chat';
 
 const SERVER_PORT = 5000;
 /** indicate the error is coming from the server */
@@ -33,6 +39,7 @@ export class ChatServer {
     this.securityMiddleware(this.app);
     this.standardMiddleware(this.app);
     this.routeMiddleware(this.app);
+    this.apiMonitoring(this.app);
     this.globalErrorHandler(this.app);
     this.startServer(this.app);
   }
@@ -43,7 +50,7 @@ export class ChatServer {
       cookierSession({
         name: 'session',
         keys: [config.SECRET_KEY_ONE!, config.SECRET_KEY_TWO!],
-        maxAge: 24 * 7 * 3600000 /**amount of time cookie will stay, unit in ms */,
+        maxAge: 7 * 24 * 3600000 /**amount of time cookie will stay, unit in ms */,
         secure: config.NODE_ENV !== 'development' /**can set to false on local machine, once deploy to https , need to set to true */
       })
     );
@@ -51,7 +58,7 @@ export class ChatServer {
     app.use(helmet());
     app.use(
       cors({
-        origin: config.CLIENT_URL /** asterik for now 
+        origin: config.CLIENT_URL /** asterik for now
                             set to 'http://localhost:3000' for local environment
                                 'https://dev.chatapp.com' for development environment */,
         credentials: true,
@@ -68,6 +75,18 @@ export class ChatServer {
 
   private routeMiddleware(app: Application): void {
     applicationRoutes(app);
+  }
+
+  /**
+   * Monitor api traffic using swagger-stats
+   * @param app
+   */
+  private apiMonitoring(app: Application): void {
+    app.use(
+      apiStats.getMiddleware({
+        uriPath: '/api-monitoring'
+      })
+    );
   }
 
   /**
@@ -90,6 +109,10 @@ export class ChatServer {
   }
 
   private async startServer(app: Application): Promise<void> {
+    //if no JWT_TOKEN present
+    if(!config.JWT_TOKEN) {
+      throw new Error('JWT_TOKEN must be provided');
+    }
     try {
       const httpServer: http.Server = new http.Server(app);
       const socketIO: Server = await this.createSocketIO(httpServer);
@@ -117,9 +140,29 @@ export class ChatServer {
     return io;
   }
 
-  private socketIOConnections(io: Server): void {}
+  /**
+   * Create socket io connection
+   *
+   * @param io
+   */
+  private socketIOConnections(io: Server): void {
+    const postSocketHandler: SocketIOPostHandler = new SocketIOPostHandler(io);
+    const followSocketHandler: SocketIOFollowerHandler = new SocketIOFollowerHandler(io);
+    const userSocketHandler: SocketIOUserHandler = new SocketIOUserHandler(io);
+    const notificationSocketHandler: SocketIONotificationHandler = new SocketIONotificationHandler();
+    const imageSocketHandler: SocketIOImageHandler = new SocketIOImageHandler();
+    const chatSocketHandler: SocketIOChatHandler = new SocketIOChatHandler(io);
+
+    postSocketHandler.listen();
+    followSocketHandler.listen();
+    userSocketHandler.listen();
+    notificationSocketHandler.listen(io);
+    imageSocketHandler.listen(io);
+    chatSocketHandler.listen();
+  }
 
   private startHttpServer(httpServer: http.Server): void {
+    log.info(`Worker with process id of ${process.pid} has started...`);
     log.info(`Server has started with process ${process.pid}`);
     httpServer.listen(SERVER_PORT, () => {
       log.info(`Server running on port ${SERVER_PORT}`); /**not recommend to use console.log for production */

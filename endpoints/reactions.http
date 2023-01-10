@@ -1,0 +1,43 @@
+@baseUrl = http://localhost:5000
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/post/reaction
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "userTo": "63b54a0218af1cdc2b1294fa",
+  "postId": "63b6afbe327a34fedc9484b1",
+  "type": "love",
+  "previousReaction": "",
+  "postReactions": 	{"like": 0,"love": 2,"happy": 0,"sad": 0,"wow": 0,"angry": 0},
+  "profilePicture": "https://res.cloudinary.com/dlf1ttson/image/upload/v1672688643/63b334031f0b5d2fd74478d9"
+}
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/post/reaction/63b6afbe327a34fedc9484b1/love/{"like": 0,"love": 0,"happy": 0,"sad": 0,"wow": 0,"angry": 0}
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/reactions/63b6afbe327a34fedc9484b1
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/single/reaction/username/63b6afbe327a34fedc9484b1/testEmai
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/reactions/username/testEmai
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
