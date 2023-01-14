@@ -75,16 +75,34 @@ with some ongoing improvement feature of my own.
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+#### Development Environment
+<ul>
+<li> Operating System   - Windows 10 Home Edition (for main code) and Ubuntu 22.04.1 LTS (to run the redis server) </li>
+<li> IDE                - visual studio code </li>
+<li> Browser            - Chrome </li>
+</ul>
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+#### Main Tools 
+
+<ul>
+<li> AWS                   - Cloud computing platform </li>
+<li> CircleCI              - CI/CD platform </li>
+<li> MongoDB(v6.0.3)       - for database </li>
+<li> NodeJS (v19.3.0)      - for Javascript runtime development</li>
+<li> Redis                 - In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) </li>
+<li> Terraform             - Infrastructure as code tool for AWS </li>
+</ul>
+
+#### Main npm libraries used
+
+<ul>
+<li> AWS                   - Cloud computing platform </li>
+<li> CircleCI              - CI/CD platform </li>
+<li> MongoDB(v6.0.3)       - for database </li>
+<li> NodeJS (v19.3.0)      - for Javascript runtime development</li>
+<li> Redis                 - In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) </li>
+<li> Terraform             - Infrastructure as code tool for AWS </li>
+</ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -236,14 +254,6 @@ Credit to the following course in Udemy: https://www.udemy.com/course/node-with-
 ## Tools used:
 ### Front End:
 ### Back End:
-<ul>
-<li> AWS           - Cloud computing platform </li>
-<li> CircleCI      - CI/CD platform </li>
-<li> Message Queue - Redis-based message queue </li>
-<li> MongoDB(v6.0.3)       - for database </li>
-<li> NodeJS (v19.3.0)       - for Javascript runtime </li>
-<li> Redis         - In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) </li>
-<li> Terraform     - Infrastructure as code tool for AWS </li>
-</ul>
+
 
 ## Deployment Instructions:
