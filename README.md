@@ -87,42 +87,35 @@ with some ongoing improvement feature of my own.
 <ul>
 <li> AWS                   - Cloud computing platform </li>
 <li> CircleCI              - CI/CD platform </li>
+<li> Cloudinary            - for image and video upload </li>
 <li> MongoDB(v6.0.3)       - for database </li>
 <li> NodeJS (v19.3.0)      - for Javascript runtime development</li>
 <li> Redis                 - In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) </li>
+<li> Sendgrid              - for email delivery </li>
 <li> Terraform             - Infrastructure as code tool for AWS </li>
 </ul>
 
 #### Main npm libraries used
 
-For complete lists of dependencies and development dependencies you can refer to the package.json file here (https://github.com/your_username/repo_name). 
+For complete lists of dependencies and development dependencies you can refer to the package.json file here (https://github.com/sjchin88/chatapp-backend/blob/develop/package.json). 
+
 Figure below illustrate hows the main tools and libraries work together to deliver the core functionality of the back end. 
 
 <ul>
 <li> bull, bullmq, @bull-board/express, @bull-board/ui               - manage the jobs involving database in queue </li>
-<li> faker-js/faker               - manage the jobs involving database in queue </li>
-    "@bull-board/ui": "^4.10.0",
-    "@faker-js/faker": "^7.6.0",
-    "@jest/types": "^29.3.1",
-    "@sendgrid/mail": "^7.7.0",
-    "@socket.io/redis-adapter": "^8.0.0",
-    "@types/jest": "^29.2.5",
-    "axios": "^1.2.2",
-    "bcryptjs": "^2.4.3",
-    "bull": "^4.10.2",
-    "bullmq": "^3.5.2",
-    "bunyan": "^1.8.15",
-    "canvas": "^2.11.0",
-    "cloudinary": "^1.33.0",
-    "compression": "^1.7.4",
-    "cookie-session": "^2.0.0",
-    "cors": "^2.8.5",
+<li> @faker-js/faker                                                 - generate test data for testing </li>
+<li> @jest/types                                                     - main testing tool </li>
+<li> axios                                                           - make http requests from node.js, used for health check and seeding random data </li>
+<li> bcryptjs                                                        - for password encryption </li>
+<li> bunyan                                                          - for json logging </li>
+<li> compression                                                     - compression middleware for node.js, used to compress (and thus decrease) the downloadable amount of data send to users </li>
+<li> cookie-session, cors, helmet, hpp,                              - cookie-session : store client's cookie on server side,  cors: for CORS, helmet: setting secure options for various HTTP headers, hpp: Express middleware to protect against HTTP Parameter Pollution attacks</li>
+
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
-    "helmet": "^6.0.1",
-    "hpp": "^0.2.3",
+
     "http-status-codes": "^2.2.0",
     "ip": "^1.1.8",
     "joi": "^17.7.0",
