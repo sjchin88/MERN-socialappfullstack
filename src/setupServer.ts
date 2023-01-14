@@ -5,7 +5,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import compression from 'compression';
-import cookierSession from 'cookie-session';
+import cookieSession from 'cookie-session';
 import HTTP_STATUS from 'http-status-codes';
 import { Server } from 'socket.io';
 import { createClient } from 'redis';
@@ -47,7 +47,7 @@ export class ChatServer {
   private securityMiddleware(app: Application): void {
     /**app.use is use to call the middleware,  */
     app.use(
-      cookierSession({
+      cookieSession({
         name: 'session',
         keys: [config.SECRET_KEY_ONE!, config.SECRET_KEY_TWO!],
         maxAge: 7 * 24 * 3600000 /**amount of time cookie will stay, unit in ms */,
