@@ -95,13 +95,48 @@ with some ongoing improvement feature of my own.
 
 #### Main npm libraries used
 
+For complete lists of dependencies and development dependencies you can refer to the package.json file here (https://github.com/your_username/repo_name). 
+Figure below illustrate hows the main tools and libraries work together to deliver the core functionality of the back end. 
+
 <ul>
-<li> AWS                   - Cloud computing platform </li>
-<li> CircleCI              - CI/CD platform </li>
-<li> MongoDB(v6.0.3)       - for database </li>
-<li> NodeJS (v19.3.0)      - for Javascript runtime development</li>
-<li> Redis                 - In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) </li>
-<li> Terraform             - Infrastructure as code tool for AWS </li>
+<li> bull, bullmq, @bull-board/express, @bull-board/ui               - manage the jobs involving database in queue </li>
+<li> faker-js/faker               - manage the jobs involving database in queue </li>
+    "@bull-board/ui": "^4.10.0",
+    "@faker-js/faker": "^7.6.0",
+    "@jest/types": "^29.3.1",
+    "@sendgrid/mail": "^7.7.0",
+    "@socket.io/redis-adapter": "^8.0.0",
+    "@types/jest": "^29.2.5",
+    "axios": "^1.2.2",
+    "bcryptjs": "^2.4.3",
+    "bull": "^4.10.2",
+    "bullmq": "^3.5.2",
+    "bunyan": "^1.8.15",
+    "canvas": "^2.11.0",
+    "cloudinary": "^1.33.0",
+    "compression": "^1.7.4",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^6.0.1",
+    "hpp": "^0.2.3",
+    "http-status-codes": "^2.2.0",
+    "ip": "^1.1.8",
+    "joi": "^17.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "mongoose": "^6.8.2",
+    "nodemailer": "^6.8.0",
+    "redis": "^4.5.1",
+    "socket.io": "^4.5.4",
+    "swagger-stats": "^0.99.4",
+    "ttypescript": "^1.5.15",
+    "typescript": "^4.9.4",
+    "typescript-transform-paths": "^3.4.4"
 </ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
