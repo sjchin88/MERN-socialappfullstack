@@ -76,12 +76,12 @@ with some ongoing improvement feature of my own.
 ### Built With
 
 #### Development Environment
-<ul>
-<li> Operating System   - Windows 10 Home Edition (for main code) and Ubuntu 22.04.1 LTS (to run the redis server) </li>
-<li> IDE                - visual studio code </li>
-<li> Browser            - Chrome </li>
-<li> Main language      - typescript (note the front-end is developed using javascript)
-</ul>
+| Environment      | Description |
+| ----------- | ----------- |
+| Operating System      | Windows 10 Home Edition (for main code) and Ubuntu 22.04.1 LTS (to run the redis server)      |
+| IDE                |visual studio code |
+|Browser            | Chrome |
+|Main language     | typescript (note the front-end is developed using javascript)|
 
 #### Main Tools 
 
