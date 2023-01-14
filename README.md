@@ -65,8 +65,9 @@
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 This is the backend for a social media application project built mainly based on MERN (Mongo DB, Express, React, Node.js). 
-The project structure followed the following course in Udemy: https://www.udemy.com/course/node-with-react-build-deploy-a-fullstack-web-application/
-With some ongoing improvement feature of my own.
+
+The project structure followed the following course in Udemy: https://www.udemy.com/course/node-with-react-build-deploy-a-fullstack-web-application/ 
+with some ongoing improvement feature of my own.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
