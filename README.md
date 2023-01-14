@@ -80,6 +80,7 @@ with some ongoing improvement feature of my own.
 <li> Operating System   - Windows 10 Home Edition (for main code) and Ubuntu 22.04.1 LTS (to run the redis server) </li>
 <li> IDE                - visual studio code </li>
 <li> Browser            - Chrome </li>
+<li> Main language      - typescript (note the front-end is developed using javascript)
 </ul>
 
 #### Main Tools 
@@ -110,31 +111,18 @@ Figure below illustrate hows the main tools and libraries work together to deliv
 <li> bunyan                                                          - for json logging </li>
 <li> compression                                                     - compression middleware for node.js, used to compress (and thus decrease) the downloadable amount of data send to users </li>
 <li> cookie-session, cors, helmet, hpp,                              - cookie-session : store client's cookie on server side,  cors: for CORS, helmet: setting secure options for various HTTP headers, hpp: Express middleware to protect against HTTP Parameter Pollution attacks</li>
-
-    "dotenv": "^16.0.3",
-    "ejs": "^3.1.8",
-    "express": "^4.18.2",
-    "express-async-errors": "^3.1.1",
-
-    "http-status-codes": "^2.2.0",
-    "ip": "^1.1.8",
-    "joi": "^17.7.0",
-    "jsonwebtoken": "^9.0.0",
-    "lodash": "^4.17.21",
-    "moment": "^2.29.4",
-    "mongoose": "^6.8.2",
-    "nodemailer": "^6.8.0",
-    "redis": "^4.5.1",
-    "socket.io": "^4.5.4",
-    "swagger-stats": "^0.99.4",
-    "ttypescript": "^1.5.15",
-    "typescript": "^4.9.4",
-    "typescript-transform-paths": "^3.4.4"
+<li> dotenv                             - manage environment keys</li>
+<li> ejs, nodemailer  - ejs: render email templates, nodemailer: handling email communications</li>
+<li> ip                             - get the ip address</li>
+<li> joi                             - for form input validations</li>
+<li> jsonwebtoken                             - for JSON Web Token (JWT)</li>
+<li> lodash                             - javascript tools help with common data structures operations around arrays, strings, objects</li>
+<li> moment                            - to manipulate date</li>
+<li> socket.io                           </li>
+<li> swagger-stats                       </li>
 </ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -184,17 +172,15 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 <!-- ROADMAP -->
-## Roadmap
+## TODO Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
+- [ ] Deploy backend application to AWS (target by end of Jan)
+- [ ] Features Addition:
+    - [ ] delete comments
+- [ ] Improvements:
+    - [ ] on how datas are add, retrieve and edit in the backend
 - [ ] Multi-language Support
     - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -243,14 +229,8 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 
 Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+* [An awesome README template](https://github.com/othneildrew/Best-README-Template)
+* [Udemy: Node with React: Build & Deploy a Fullstack Web Application](https://www.udemy.com/course/node-with-react-build-deploy-a-fullstack-web-application/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -275,13 +255,3 @@ Use this space to list resources you find helpful and would like to give credit 
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
-# Chatapp-backend
-A social media application based on MERN (Mongo DB, Express, React, Node.js)
-Credit to the following course in Udemy: https://www.udemy.com/course/node-with-react-build-deploy-a-fullstack-web-application/
-
-## Tools used:
-### Front End:
-### Back End:
-
-
-## Deployment Instructions:
