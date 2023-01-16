@@ -181,10 +181,19 @@ The following installation and set up guides is for running the backend app usin
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Useful commands
+| command     | what it does |
+| ----------- | ----------- |
+|npm run start | start the backend app in production mode with pm2 management of app instances |
+|npm run stop | stop the started backend |
+|npm run dev | start the backend app in development mode (recommended to start with) |
+|npm run build | build the project into js files |
+|npm run test | run all the test cases |
+|npm run seeds:dev | generate some random data, right now will generate some users data |
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+### End points
 
+For more details on the functions available, please refer to the [Documentation](https://github.com/sjchin88/SociusApp-backend/tree/develop/docs)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
