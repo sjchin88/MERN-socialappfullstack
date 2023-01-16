@@ -9,9 +9,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="">
+  <!--<a href="">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a>-->
 
   <h1 align="center">SociusApp-backend</h1>
 
@@ -21,11 +21,11 @@
     <a href=><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href=>View Demo</a>
+    <!--<a href=>View Demo</a>
     ·
     <a href=>Report Bug</a>
     ·
-    <a href=>Request Feature</a>
+    <a href=>Request Feature</a>-->
   </p>
 </div>
 
