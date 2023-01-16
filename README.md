@@ -62,7 +62,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<!--[![Product Name Screen Shot][product-screenshot]](https://example.com)-->
 
 This is the backend for a social media application project built mainly based on MERN (Mongo DB, Express, React, Node.js). 
 
@@ -101,25 +101,26 @@ For complete lists of dependencies and development dependencies you can refer to
 
 Figure below illustrate hows the main tools and libraries work together to deliver the core functionality of the back end. 
 
-<ul>
-<li> bull, bullmq, @bull-board/express, @bull-board/ui               - manage the jobs involving database in queue </li>
-<li> @faker-js/faker                                                 - generate test data for testing </li>
-<li> @jest/types                                                     - main testing tool </li>
-<li> axios                                                           - make http requests from node.js, used for health check and seeding random data </li>
-<li> bcryptjs                                                        - for password encryption </li>
-<li> bunyan                                                          - for json logging </li>
-<li> compression                                                     - compression middleware for node.js, used to compress (and thus decrease) the downloadable amount of data send to users </li>
-<li> cookie-session, cors, helmet, hpp,                              - cookie-session : store client's cookie on server side,  cors: for CORS, helmet: setting secure options for various HTTP headers, hpp: Express middleware to protect against HTTP Parameter Pollution attacks</li>
-<li> dotenv                             - manage environment keys</li>
-<li> ejs, nodemailer  - ejs: render email templates, nodemailer: handling email communications</li>
-<li> ip                             - get the ip address</li>
-<li> joi                             - for form input validations</li>
-<li> jsonwebtoken                             - for JSON Web Token (JWT)</li>
-<li> lodash                             - javascript tools help with common data structures operations around arrays, strings, objects</li>
-<li> moment                            - to manipulate date</li>
-<li> socket.io                           </li>
-<li> swagger-stats                       </li>
-</ul>
+| NPM Library      | Description of Usage |
+| ----------- | ----------- |
+| bull, bullmq, @bull-board/express, @bull-board/ui  | manage the jobs involving database in queue |
+| @faker-js/faker   | generate test data for testing |
+| @jest/types   | main testing tool |
+| axios  | make http requests from node.js, used for health check and seeding random data |
+| bcryptjs  | for password encryption |
+| bunyan  | for json logging |
+| compression  | compression middleware for node.js, used to compress (and thus decrease) the downloadable amount of data send to users |
+| cookie-session, cors, helmet, hpp  | cookie-session : store client's cookie on server side,  cors: for CORS, helmet: setting secure options for various HTTP headers, hpp: Express middleware to protect against HTTP Parameter Pollution attacks |
+| dotenv  | manage environment keys |
+| ejs, nodemailer  | ejs: render email templates, nodemailer: handling email communications |
+| ip  | get the ip address |
+| joi  | for form input validations |
+| jsonwebtoken  | for JSON Web Token (JWT) |
+| lodash   | javascript tools help with common data structures operations around arrays, strings, objects |
+| moment  | to manipulate date |
+| socket.io   | manage socket connection, can be used to send immediate feedback to client's request |
+| swagger-stats  | manage website traffic statistic to the backend  |
+| typedoc  | generate documentation |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
