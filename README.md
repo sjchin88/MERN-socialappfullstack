@@ -192,7 +192,8 @@ The following installation and set up guides is for running the backend app usin
 |npm run seeds:dev | generate some random data, right now will generate some users data |
 
 ### End points
-
+You can check the list of end points available <a href="https://github.com/sjchin88/SociusApp-backend/tree/develop/endpoints"><strong>here</strong></a>
+  
 For more details on the functions available, please refer to the [Documentation](https://github.com/sjchin88/SociusApp-backend/tree/develop/docs)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -205,7 +206,8 @@ For more details on the functions available, please refer to the [Documentation]
 - [ ] Features Addition:
     - [ ] delete comments
 - [ ] Improvements:
-    - [ ] on how datas are add, retrieve and edit in the backend
+    - [ ] improve how datas are add, retrieve and edit in the backend to improve the efficiency of the operations
+    - [ ] improve documentations, include a final list of api end points available with explanation. 
 - [ ] Multi-language Support
     - [ ] Chinese
 
