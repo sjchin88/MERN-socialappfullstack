@@ -20,6 +20,7 @@
     <br />
     <a href="https://github.com/sjchin88/SociusApp-backend/tree/develop/docs"><strong>Explore the docs »</strong></a>
     <br />
+    <a href="https://github.com/sjchin88/SociusApp-frontend"><strong>Checkout the front end »</strong></a>
     <br />
     <!--<a href=>View Demo</a>
     ·
