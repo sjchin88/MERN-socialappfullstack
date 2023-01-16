@@ -91,7 +91,7 @@ with some ongoing improvement feature of my own.
 | Cloudinary | for image and video upload |
 | MongoDB | for database |
 | NodeJS | for Javascript runtime development |
-| Redis | In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) |
+| Redis | In-memory cache management |
 | Sendgrid| for email delivery |
 | Terraform  | Infrastructure as code tool for AWS |
 
@@ -127,34 +127,52 @@ Figure below illustrate hows the main tools and libraries work together to deliv
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+You can run the backend on your local machine for testing. 
+The following installation and set up guides is for running the backend app using visual studio code. 
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+1. Install NodeJS.  https://nodejs.org/en/
+2. Installing npm
 * npm
   ```sh
   npm install npm@latest -g
   ```
+3. Install MongoDB. https://www.mongodb.com/docs/manual/administration/install-community/
+4. Install MongoDB Compass. https://www.mongodb.com/try/download/compass
+5. Install Redis. https://redis.io/docs/getting-started/installation/ (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY)
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/your_username_/Project-Name.git
    ```
-3. Install NPM packages
+2. Install NPM packages 
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+3. Create a .env file under project root folder. With the following settings
+
+### .env configuration
+| .env key     | value |
+| ----------- | ----------- |
+|DATABASE_URL | 'mongodb://127.0.0.1:27017/chatapp-backend'|
+|JWT_TOKEN | 'thisisatokenfromme' |
+|NODE_ENV | 'development'|
+|SECRET_KEY_ONE | 'thisisasecretcookiekey'|
+|SECRET_KEY_TWO | 'thisisanothersecretcookiekey'|
+|CLIENT_URL | 'http://localhost:3000'|
+|API_URL | 'http://localhost:5000/api/v1'|
+|REDIS_HOST| = 'redis://127.0.0.1:6379' |
+|CLOUD_NAME| <your cloudinary cloud name> |
+|CLOUD_API_KEY|<your cloudinary API key> |
+|CLOUD_API_SECRET|<your cloudinary API secret key> |
+|SENDER_EMAIL| <your email account used for testing> |
+|SENDER_EMAIL_PASSWORD|<your email account password> |
+|SENDGRID_API_KEY| < your sendgrid api key> |
+|SENDGRID_SENDER|< your sendgrid account> |
+|EC2_URL|http://169.254.169.254/latest/meta-data/instance-id|
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
