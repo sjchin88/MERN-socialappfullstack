@@ -7,6 +7,9 @@ import Logger from 'bunyan';
 
 const log: Logger = config.createLogger('app');
 
+/**
+ * Start of the application
+ */
 class Application {
   public initialize(): void {
     this.loadConfig();
@@ -52,6 +55,10 @@ class Application {
     });
   }
 
+  /**
+   * Function to shutdown properly
+   * @param exitCode exitCode in number
+   */
   private static shutDownProperly(exitCode: number): void {
     Promise.resolve().then(() => {
       log.info('Shutdown complete');
