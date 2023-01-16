@@ -18,7 +18,7 @@
   <p align="center">
     An ongoing, experimental social media app project from me
     <br />
-    <a href=><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/sjchin88/SociusApp-backend/tree/develop/docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <!--<a href=>View Demo</a>
@@ -84,17 +84,16 @@ with some ongoing improvement feature of my own.
 |Main language     | typescript (note the front-end is developed using javascript)|
 
 #### Main Tools 
-
-<ul>
-<li> AWS                   - Cloud computing platform </li>
-<li> CircleCI              - CI/CD platform </li>
-<li> Cloudinary            - for image and video upload </li>
-<li> MongoDB(v6.0.3)       - for database </li>
-<li> NodeJS (v19.3.0)      - for Javascript runtime development</li>
-<li> Redis                 - In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) </li>
-<li> Sendgrid              - for email delivery </li>
-<li> Terraform             - Infrastructure as code tool for AWS </li>
-</ul>
+| Main Tool      | Description of Usage |
+| ----------- | ----------- |
+| AWS | Cloud computing platform, used for hosting the backend and frontend |
+| CircleCI | CI/CD platform |
+| Cloudinary | for image and video upload |
+| MongoDB | for database |
+| NodeJS | for Javascript runtime development |
+| Redis | In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) |
+| Sendgrid| for email delivery |
+| Terraform  | Infrastructure as code tool for AWS |
 
 #### Main npm libraries used
 
