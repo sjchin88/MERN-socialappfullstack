@@ -9,9 +9,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="">
+  <!--<a href="">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a>-->
 
   <h1 align="center">SociusApp-backend</h1>
 
@@ -21,11 +21,11 @@
     <a href=><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href=>View Demo</a>
+    <!--<a href=>View Demo</a>
     ·
     <a href=>Report Bug</a>
     ·
-    <a href=>Request Feature</a>
+    <a href=>Request Feature</a>-->
   </p>
 </div>
 
@@ -76,12 +76,12 @@ with some ongoing improvement feature of my own.
 ### Built With
 
 #### Development Environment
-<ul>
-<li> Operating System   - Windows 10 Home Edition (for main code) and Ubuntu 22.04.1 LTS (to run the redis server) </li>
-<li> IDE                - visual studio code </li>
-<li> Browser            - Chrome </li>
-<li> Main language      - typescript (note the front-end is developed using javascript)
-</ul>
+| Environment      | Description |
+| ----------- | ----------- |
+| Operating System      | Windows 10 Home Edition (for main code) and Ubuntu 22.04.1 LTS (to run the redis server)      |
+| IDE                |visual studio code |
+|Browser            | Chrome |
+|Main language     | typescript (note the front-end is developed using javascript)|
 
 #### Main Tools 
 
@@ -216,9 +216,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+My linkedin - [https://www.linkedin.com/in/shiang-jin-chin-b1575944/](https://www.linkedin.com/in/shiang-jin-chin-b1575944/)
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/sjchin88/SociusApp-backend](https://github.com/sjchin88/SociusApp-backend)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -226,8 +226,6 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
 * [An awesome README template](https://github.com/othneildrew/Best-README-Template)
 * [Udemy: Node with React: Build & Deploy a Fullstack Web Application](https://www.udemy.com/course/node-with-react-build-deploy-a-fullstack-web-application/)
