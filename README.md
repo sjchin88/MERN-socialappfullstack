@@ -190,7 +190,7 @@ The following installation and set up guides is for running the backend app usin
 |npm run dev | start the backend app in development mode (recommended to start with) |
 |npm run build | build the project into js files |
 |npm run test | run all the test cases |
-|npm run seeds:dev | generate some random data, right now will generate some users data |
+|npm run seeds:dev | generate some random data, right now will generate some users data. Note the server need to be running before running this command |
 
 ### End points
 You can check the list of end points available <a href="https://github.com/sjchin88/SociusApp-backend/tree/develop/endpoints"><strong>here</strong></a>
@@ -208,7 +208,7 @@ For more details on the functions available, please refer to the [Documentation]
     - [ ] delete comments
 - [ ] Improvements:
     - [ ] improve how datas are add, retrieve and edit in the backend to improve the efficiency of the operations
-    - [ ] improve documentations, include a final list of api end points available with explanation. 
+    - [ ] improve documentations, include a final list of api end points available with explanation (Ongoing effort)
 - [ ] Multi-language Support
     - [ ] Chinese
 
