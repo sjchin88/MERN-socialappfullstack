@@ -6,6 +6,9 @@ import { Edit } from '@user/controllers/update-basic-info';
 import { UpdateSettings } from '@user/controllers/update-settings';
 import express, { Router } from 'express';
 
+/**
+ * contains the mapping of API path to respective controllers
+ */
 class UserRoutes {
   private router: Router;
 
@@ -13,6 +16,10 @@ class UserRoutes {
     this.router = express.Router();
   }
 
+  /**
+   *
+   * @returns route for all available user services
+   */
   public routes(): Router {
     this.router.get('/user/all/:page', authMiddleware.checkAuthentication, Get.prototype.all);
     this.router.get('/user/profile', authMiddleware.checkAuthentication, Get.prototype.profile);

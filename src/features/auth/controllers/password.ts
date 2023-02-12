@@ -15,10 +15,14 @@ import publicIP from 'ip';
 import { resetPasswordTemplate } from '@service/emails/templates/reset-password/reset-password-template';
 
 /**
- * Controller class for password reset
+ * Controller class for password reset service
  */
 export class Password {
-  //validate the scheme
+  /**
+   * Create method provide the password reset link to the user via email service
+   * @param req HTTP request contain useremail in req.body
+   * @param res HTTP response contain HTTP status code only
+   */
   @joiValidation(emailSchema)
   public async create(req: Request, res: Response): Promise<void> {
     const { email } = req.body;
@@ -43,6 +47,11 @@ export class Password {
 
   }
 
+  /**
+   * Method to reset (update) the existing password
+   * @param req HTTP request contain password and confirmpassword inside req.body, and reset token in req.params
+   * @param res HTTP response contain HTTP status code only
+   */
   @joiValidation(passwordSchema)
   public async update(req: Request, res: Response): Promise<void> {
     const { password, confirmPassword } = req.body;

@@ -1,5 +1,3 @@
-import { resetPasswordTemplate } from '@service/emails/templates/reset-password/reset-password-template';
-import { emailQueue } from '@service/queues/email.queue';
 import JWT from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { config } from '@root/config';
@@ -9,12 +7,18 @@ import { authService } from '@service/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { loginSchema } from '@auth/schemes/signin';
 import { IAuthDocument } from '@auth/interfaces/auth.interface';
-import { IResetPasswordParams, IUserDocument } from '@user/interfaces/user.interface';
+import { IUserDocument } from '@user/interfaces/user.interface';
 import { userService } from '@service/db/user.service';
-import moment from 'moment';
-import publicIP from 'ip';
 
+/**
+ * SignIn controller to perform login services
+ */
 export class SignIn {
+  /**
+   * Login the user
+   * @param req HTTP request from client, need to have username, password in the req.body
+   * @param res HTTP response back to client, will contain HTTP status code, user data for cache of type IUserDocument, and jwt token of type string
+   */
   @joiValidation(loginSchema)
   public async read(req: Request, res: Response): Promise<void> {
     const { username, password } = req.body;

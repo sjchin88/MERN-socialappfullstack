@@ -19,18 +19,22 @@ import { userQueue } from '@service/queues/user.queue';
 import { config } from '@root/config';
 
 const userCache: UserCache = new UserCache();
+
+/**
+ * SignUp controller class to perform sign up action
+ */
 export class SignUp {
   /**
    * joiValidation use the signup schema, get access to the req and res
-   * @param req
-   * @param res
+   * @param req http request from client, need to have username, email, password, avatarColor and avatarImage in the req.body
+   * @param res http response back to client, will contain HTTP status code, user data for cache of type IUserDocument, and jwt token of type string
    */
   @joiValidation(signupSchema)
   public async create(req: Request, res: Response): Promise<void> {
+    const { username, email, password, avatarColor, avatarImage } = req.body;
     /**
      * first check if username, email exist
      */
-    const { username, email, password, avatarColor, avatarImage } = req.body;
     const checkIfUserExist: IAuthDocument = await authService.getUserByUsernameOrEmail(username, email);
     if (checkIfUserExist) {
       throw new BadRequestError('Invalid credentials');
@@ -71,6 +75,12 @@ export class SignUp {
     res.status(HTTP_STATUS.CREATED).json({ message: 'User created successfully', user: userDataForCache, token: userJwt });
   }
 
+  /**
+   * Generate the JWT token based on given params
+   * @param data of type IAuthDocument
+   * @param userObjectId of type ObjectId
+   * @returns string value of the JWT token
+   */
   private signToken(data: IAuthDocument, userObjectId: ObjectId): string {
     return JWT.sign(
       {
@@ -86,7 +96,7 @@ export class SignUp {
 
   /**
    * Take in document and return the IAuthDocument struct
-   * @param data
+   * @param data of type ISignUpData
    */
   private signupData(data: ISignUpData): IAuthDocument {
     const { _id, username, email, uId, password, avatarColor } = data;
@@ -103,9 +113,9 @@ export class SignUp {
 
   /**
    * Return the complete data we want to save in the cache
-   * @param data
-   * @param userObjectId
-   * @returns
+   * @param data of type IAuthDocument
+   * @param userObjectId of type ObjectId
+   * @returns userData of type IUserDocument
    */
   private userData(data: IAuthDocument, userObjectId: ObjectId): IUserDocument {
     const { _id, username, email, uId, password, avatarColor } = data;

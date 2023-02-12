@@ -140,8 +140,8 @@ export class UserCache extends BaseCache {
 
   /**
    * Retrieve the list of users from start to end
-   * @param start
-   * @param end
+   * @param start start index for the list of users
+   * @param end end index for the list of users
    * @param excludedUserKey user key we want to exclude
    * @returns a list of IUserDocument
    */
