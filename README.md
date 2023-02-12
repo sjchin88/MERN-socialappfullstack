@@ -18,8 +18,9 @@
   <p align="center">
     An ongoing, experimental social media app project from me
     <br />
-    <a href=><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/sjchin88/SociusApp-backend/tree/develop/docs"><strong>Explore the docs »</strong></a>
     <br />
+    <a href="https://github.com/sjchin88/SociusApp-frontend"><strong>Checkout the front end »</strong></a>
     <br />
     <!--<a href=>View Demo</a>
     ·
@@ -62,7 +63,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<!--[![Product Name Screen Shot][product-screenshot]](https://example.com)-->
 
 This is the backend for a social media application project built mainly based on MERN (Mongo DB, Express, React, Node.js). 
 
@@ -84,17 +85,16 @@ with some ongoing improvement feature of my own.
 |Main language     | typescript (note the front-end is developed using javascript)|
 
 #### Main Tools 
-
-<ul>
-<li> AWS                   - Cloud computing platform </li>
-<li> CircleCI              - CI/CD platform </li>
-<li> Cloudinary            - for image and video upload </li>
-<li> MongoDB(v6.0.3)       - for database </li>
-<li> NodeJS (v19.3.0)      - for Javascript runtime development</li>
-<li> Redis                 - In-memory cache (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY) </li>
-<li> Sendgrid              - for email delivery </li>
-<li> Terraform             - Infrastructure as code tool for AWS </li>
-</ul>
+| Main Tool      | Description of Usage |
+| ----------- | ----------- |
+| AWS | Cloud computing platform, used for hosting the backend and frontend |
+| CircleCI | CI/CD platform |
+| Cloudinary | for image and video upload |
+| MongoDB | for database |
+| NodeJS | for Javascript runtime development |
+| Redis | In-memory cache management |
+| Sendgrid| for email delivery |
+| Terraform  | Infrastructure as code tool for AWS |
 
 #### Main npm libraries used
 
@@ -102,59 +102,78 @@ For complete lists of dependencies and development dependencies you can refer to
 
 Figure below illustrate hows the main tools and libraries work together to deliver the core functionality of the back end. 
 
-<ul>
-<li> bull, bullmq, @bull-board/express, @bull-board/ui               - manage the jobs involving database in queue </li>
-<li> @faker-js/faker                                                 - generate test data for testing </li>
-<li> @jest/types                                                     - main testing tool </li>
-<li> axios                                                           - make http requests from node.js, used for health check and seeding random data </li>
-<li> bcryptjs                                                        - for password encryption </li>
-<li> bunyan                                                          - for json logging </li>
-<li> compression                                                     - compression middleware for node.js, used to compress (and thus decrease) the downloadable amount of data send to users </li>
-<li> cookie-session, cors, helmet, hpp,                              - cookie-session : store client's cookie on server side,  cors: for CORS, helmet: setting secure options for various HTTP headers, hpp: Express middleware to protect against HTTP Parameter Pollution attacks</li>
-<li> dotenv                             - manage environment keys</li>
-<li> ejs, nodemailer  - ejs: render email templates, nodemailer: handling email communications</li>
-<li> ip                             - get the ip address</li>
-<li> joi                             - for form input validations</li>
-<li> jsonwebtoken                             - for JSON Web Token (JWT)</li>
-<li> lodash                             - javascript tools help with common data structures operations around arrays, strings, objects</li>
-<li> moment                            - to manipulate date</li>
-<li> socket.io                           </li>
-<li> swagger-stats                       </li>
-</ul>
+| NPM Library      | Description of Usage |
+| ----------- | ----------- |
+| bull, bullmq, @bull-board/express, @bull-board/ui  | manage the jobs involving database in queue |
+| @faker-js/faker   | generate test data for testing |
+| @jest/types   | main testing tool |
+| axios  | make http requests from node.js, used for health check and seeding random data |
+| bcryptjs  | for password encryption |
+| bunyan  | for json logging |
+| compression  | compression middleware for node.js, used to compress (and thus decrease) the downloadable amount of data send to users |
+| cookie-session, cors, helmet, hpp  | cookie-session : store client's cookie on server side,  cors: for CORS, helmet: setting secure options for various HTTP headers, hpp: Express middleware to protect against HTTP Parameter Pollution attacks |
+| dotenv  | manage environment keys |
+| ejs, nodemailer  | ejs: render email templates, nodemailer: handling email communications |
+| ip  | get the ip address |
+| joi  | for form input validations |
+| jsonwebtoken  | for JSON Web Token (JWT) |
+| lodash   | javascript tools help with common data structures operations around arrays, strings, objects |
+| moment  | to manipulate date |
+| socket.io   | manage socket connection, can be used to send immediate feedback to client's request |
+| swagger-stats  | manage website traffic statistic to the backend  |
+| typedoc  | generate documentation |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+You can run the backend on your local machine for testing. 
+The following installation and set up guides is for running the backend app using visual studio code. 
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+1. Install NodeJS.  https://nodejs.org/en/
+2. Installing npm
 * npm
   ```sh
   npm install npm@latest -g
   ```
+3. Install MongoDB. https://www.mongodb.com/docs/manual/administration/install-community/
+4. Install MongoDB Compass. https://www.mongodb.com/try/download/compass
+5. Install Redis. https://redis.io/docs/getting-started/installation/ (Useful video to install - https://www.youtube.com/watch?v=_nFwPTHOMIY)
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/your_username_/Project-Name.git
    ```
-3. Install NPM packages
+2. Install NPM packages 
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+3. Create a .env file under project root folder. With the following settings
+
+### .env configuration
+| .env key     | value |
+| ----------- | ----------- |
+|DATABASE_URL | 'mongodb://127.0.0.1:27017/chatapp-backend'|
+|JWT_TOKEN | 'thisisatokenfromme' |
+|NODE_ENV | 'development'|
+|SECRET_KEY_ONE | 'thisisasecretcookiekey'|
+|SECRET_KEY_TWO | 'thisisanothersecretcookiekey'|
+|CLIENT_URL | 'http://localhost:3000'|
+|API_URL | 'http://localhost:5000/api/v1'|
+|REDIS_HOST| = 'redis://127.0.0.1:6379' |
+|CLOUD_NAME| <your cloudinary cloud name> |
+|CLOUD_API_KEY|<your cloudinary API key> |
+|CLOUD_API_SECRET|<your cloudinary API secret key> |
+|SENDER_EMAIL| <your email account used for testing> |
+|SENDER_EMAIL_PASSWORD|<your email account password> |
+|SENDGRID_API_KEY| < your sendgrid api key> |
+|SENDGRID_SENDER|< your sendgrid account> |
+|EC2_URL|http://169.254.169.254/latest/meta-data/instance-id|
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -163,10 +182,20 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Useful commands
+| command     | what it does |
+| ----------- | ----------- |
+|npm run start | start the backend app in production mode with pm2 management of app instances |
+|npm run stop | stop the started backend |
+|npm run dev | start the backend app in development mode (recommended to start with) |
+|npm run build | build the project into js files |
+|npm run test | run all the test cases |
+|npm run seeds:dev | generate some random data, right now will generate some users data. Note the server need to be running before running this command |
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
+### End points
+You can check the list of end points available <a href="https://github.com/sjchin88/SociusApp-backend/tree/develop/endpoints"><strong>here</strong></a>
+  
+For more details on the functions available, please refer to the [Documentation](https://github.com/sjchin88/SociusApp-backend/tree/develop/docs)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -178,7 +207,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Features Addition:
     - [ ] delete comments
 - [ ] Improvements:
-    - [ ] on how datas are add, retrieve and edit in the backend
+    - [ ] improve how datas are add, retrieve and edit in the backend to improve the efficiency of the operations
+    - [ ] improve documentations, include a final list of api end points available with explanation (Ongoing effort)
 - [ ] Multi-language Support
     - [ ] Chinese
 
