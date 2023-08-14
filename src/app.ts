@@ -60,13 +60,15 @@ class Application {
    * @param exitCode exitCode in number
    */
   private static shutDownProperly(exitCode: number): void {
-    Promise.resolve().then(() => {
-      log.info('Shutdown complete');
-      process.exit(exitCode);
-    }).catch((error) => {
-      log.error(`Error during shutdown: ${error}`);
-      process.exit(1);
-    });
+    Promise.resolve()
+      .then(() => {
+        log.info('Shutdown complete');
+        process.exit(exitCode);
+      })
+      .catch((error) => {
+        log.error(`Error during shutdown: ${error}`);
+        process.exit(1);
+      });
   }
 }
 

@@ -19,9 +19,22 @@ const notificationSchema: Schema = new Schema({
   createdAt: { type: Date, default: Date.now() }
 });
 
-notificationSchema.methods.insertNotification = async function(body: INotification) {
-  const { userTo, userFrom, message, notificationType, entityId, createdItemId,
-    createdAt, comment, reaction, post, imgId, imgVersion, gifUrl} = body;
+notificationSchema.methods.insertNotification = async function (body: INotification) {
+  const {
+    userTo,
+    userFrom,
+    message,
+    notificationType,
+    entityId,
+    createdItemId,
+    createdAt,
+    comment,
+    reaction,
+    post,
+    imgId,
+    imgVersion,
+    gifUrl
+  } = body;
 
   await NotificationModel.create({
     userTo,
@@ -45,8 +58,7 @@ notificationSchema.methods.insertNotification = async function(body: INotificati
   } catch (error) {
     return error;
   }
-}
+};
 
-const NotificationModel: Model<INotificationDocument> = model<INotificationDocument>('Notification',
-notificationSchema, 'Notification');
+const NotificationModel: Model<INotificationDocument> = model<INotificationDocument>('Notification', notificationSchema, 'Notification');
 export { NotificationModel };

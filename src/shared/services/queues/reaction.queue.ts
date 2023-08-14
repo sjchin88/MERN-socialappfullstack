@@ -2,7 +2,6 @@ import { IReactionJob } from '@reaction/interfaces/reaction.interface';
 import { BaseQueue } from '@service/queues/base.queue';
 import { reactionWorker } from '@worker/reaction.worker';
 
-
 class ReactionQueue extends BaseQueue {
   constructor() {
     super('reactions');

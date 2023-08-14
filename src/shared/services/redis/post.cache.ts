@@ -2,7 +2,7 @@ import { ServerError } from '@global/helpers/error-handler';
 import { BaseCache } from '@service/redis/base.cache';
 import { config } from '@root/config';
 import Logger from 'bunyan';
-import { IPostDocument, ISavePostToCache} from '@post/interfaces/post.interface';
+import { IPostDocument, ISavePostToCache } from '@post/interfaces/post.interface';
 import { Helpers } from '@global/helpers/helpers';
 import { RedisCommandRawReply } from '@redis/client/dist/lib/commands';
 import { IReactions } from '@reaction/interfaces/reaction.interface';
@@ -28,23 +28,68 @@ export class PostCache extends BaseCache {
     const { key, currentUserId, uId, createdPost } = data;
     //Decompose the arguments from one of the argument (createdPost) above
     const {
-      _id, userId, username, email, avatarColor, profilePicture, post, bgColor, feelings,
-      privacy, gifUrl, commentsCount, imgVersion, imgId, videoVersion, videoId, reactions, createdAt
+      _id,
+      userId,
+      username,
+      email,
+      avatarColor,
+      profilePicture,
+      post,
+      bgColor,
+      feelings,
+      privacy,
+      gifUrl,
+      commentsCount,
+      imgVersion,
+      imgId,
+      videoVersion,
+      videoId,
+      reactions,
+      createdAt
     } = createdPost;
 
     //Constructing first list of string
     const firstList: string[] = [
-      '_id', `${_id}`, 'userId', `${userId}`, 'username', `${username}`,
-      'email', `${email}`, 'avatarColor', `${avatarColor}`, 'profilePicture', `${profilePicture}`,
-      'post', `${post}`, 'bgColor', `${bgColor}`, 'feelings', `${feelings}`,
-      'privacy', `${privacy}`, 'gifUrl', `${gifUrl}`
+      '_id',
+      `${_id}`,
+      'userId',
+      `${userId}`,
+      'username',
+      `${username}`,
+      'email',
+      `${email}`,
+      'avatarColor',
+      `${avatarColor}`,
+      'profilePicture',
+      `${profilePicture}`,
+      'post',
+      `${post}`,
+      'bgColor',
+      `${bgColor}`,
+      'feelings',
+      `${feelings}`,
+      'privacy',
+      `${privacy}`,
+      'gifUrl',
+      `${gifUrl}`
     ];
 
     //Constructing second list of string, note objects are being stringify
     const secondList: string[] = [
-      'commentsCount', `${commentsCount}`, 'reactions', JSON.stringify(reactions),
-      'imgVersion', `${imgVersion}`, 'imgId', `${imgId}`,
-      'videoVersion', `${videoVersion}`, 'videoId', `${videoId}`,'createdAt', `${createdAt}`
+      'commentsCount',
+      `${commentsCount}`,
+      'reactions',
+      JSON.stringify(reactions),
+      'imgVersion',
+      `${imgVersion}`,
+      'imgId',
+      `${imgId}`,
+      'videoVersion',
+      `${videoVersion}`,
+      'videoId',
+      `${videoId}`,
+      'createdAt',
+      `${createdAt}`
     ];
 
     //Construct the dataToSave as list of strings
@@ -96,7 +141,7 @@ export class PostCache extends BaseCache {
         multi.HGETALL(`posts:${value}`);
       }
       //Cast the replies from multi.exec() as PostCacheMultiType which we defined earlier
-      const replies: PostCacheMultiType = await multi.exec() as PostCacheMultiType;
+      const replies: PostCacheMultiType = (await multi.exec()) as PostCacheMultiType;
       const postReplies: IPostDocument[] = [];
       for (const post of replies as IPostDocument[]) {
         post.commentsCount = Helpers.parseJson(`${post.commentsCount}`) as number;
@@ -112,9 +157,9 @@ export class PostCache extends BaseCache {
   }
 
   /**
-  * Get total number of Posts in the cache
-  * @returns the total number
-  */
+   * Get total number of Posts in the cache
+   * @returns the total number
+   */
   public async getTotalPostsInCache(): Promise<number> {
     try {
       if (!this.client.isOpen) {
@@ -122,7 +167,6 @@ export class PostCache extends BaseCache {
       }
       const count: number = await this.client.ZCARD('post');
       return count;
-
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
@@ -148,10 +192,10 @@ export class PostCache extends BaseCache {
       for (const value of reply) {
         multi.HGETALL(`posts:${value}`);
       }
-      const replies: PostCacheMultiType = await multi.exec() as PostCacheMultiType;
+      const replies: PostCacheMultiType = (await multi.exec()) as PostCacheMultiType;
       const postWithImages: IPostDocument[] = [];
       for (const post of replies as IPostDocument[]) {
-        if((post.imgId && post.imgVersion) || post.gifUrl ) {
+        if ((post.imgId && post.imgVersion) || post.gifUrl) {
           post.commentsCount = Helpers.parseJson(`${post.commentsCount}`) as number;
           post.reactions = Helpers.parseJson(`${post.reactions}`) as IReactions;
           post.createdAt = new Date(Helpers.parseJson(`${post.createdAt}`));
@@ -177,10 +221,10 @@ export class PostCache extends BaseCache {
       for (const value of reply) {
         multi.HGETALL(`posts:${value}`);
       }
-      const replies: PostCacheMultiType = await multi.exec() as PostCacheMultiType;
+      const replies: PostCacheMultiType = (await multi.exec()) as PostCacheMultiType;
       const postWithVideos: IPostDocument[] = [];
       for (const post of replies as IPostDocument[]) {
-        if((post.videoId && post.videoVersion) || post.gifUrl ) {
+        if ((post.videoId && post.videoVersion) || post.gifUrl) {
           post.commentsCount = Helpers.parseJson(`${post.commentsCount}`) as number;
           post.reactions = Helpers.parseJson(`${post.reactions}`) as IReactions;
           post.createdAt = new Date(Helpers.parseJson(`${post.createdAt}`));
@@ -201,7 +245,7 @@ export class PostCache extends BaseCache {
    * @param end
    * @returns
    */
-  public async getUserPostsFromCache(key: string, uId:number): Promise<IPostDocument[]> {
+  public async getUserPostsFromCache(key: string, uId: number): Promise<IPostDocument[]> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();
@@ -213,7 +257,7 @@ export class PostCache extends BaseCache {
       for (const value of reply) {
         multi.HGETALL(`posts:${value}`);
       }
-      const replies: PostCacheMultiType = await multi.exec() as PostCacheMultiType;
+      const replies: PostCacheMultiType = (await multi.exec()) as PostCacheMultiType;
       const postReplies: IPostDocument[] = [];
       for (const post of replies as IPostDocument[]) {
         post.commentsCount = Helpers.parseJson(`${post.commentsCount}`) as number;
@@ -240,7 +284,6 @@ export class PostCache extends BaseCache {
       }
       const count: number = await this.client.ZCOUNT('post', uId, uId);
       return count;
-
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
@@ -312,7 +355,7 @@ export class PostCache extends BaseCache {
       await this.client.HSET(`posts:${key}`, dataToSave);
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
       multi.HGETALL(`posts:${key}`);
-      const reply: PostCacheMultiType = await multi.exec() as PostCacheMultiType;
+      const reply: PostCacheMultiType = (await multi.exec()) as PostCacheMultiType;
       const postReply = reply as IPostDocument[];
       postReply[0].commentsCount = Helpers.parseJson(`${postReply[0].commentsCount}`) as number;
       postReply[0].reactions = Helpers.parseJson(`${postReply[0].reactions}`) as IReactions;

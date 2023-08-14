@@ -11,7 +11,7 @@ class UserService {
   }
 
   public async updatePassword(username: string, hashedPassword: string): Promise<void> {
-    await AuthModel.updateOne({ username }, { $set: { password: hashedPassword }}).exec();
+    await AuthModel.updateOne({ username }, { $set: { password: hashedPassword } }).exec();
   }
 
   public async updateUserInfo(userId: string, info: IBasicInfo): Promise<void> {
@@ -22,8 +22,9 @@ class UserService {
           work: info['work'],
           school: info['school'],
           quote: info['quote'],
-          location: info['location'],
-      }}
+          location: info['location']
+        }
+      }
     ).exec();
   }
 
@@ -33,12 +34,13 @@ class UserService {
       {
         $set: {
           social: links
-      }}
+        }
+      }
     ).exec();
   }
 
   public async updateNotificationSettings(userId: string, settings: INotificationSettings): Promise<void> {
-    await UserModel.updateOne({ _id: userId }, { $set: { notifications: settings }}).exec();
+    await UserModel.updateOne({ _id: userId }, { $set: { notifications: settings } }).exec();
   }
 
   public async getUserById(userId: string): Promise<IUserDocument> {
@@ -77,7 +79,7 @@ class UserService {
       { $match: { _id: { $ne: new mongoose.Types.ObjectId(userId) } } },
       { $skip: skip },
       { $limit: limit },
-      { $sort: { createdAt: -1 }},
+      { $sort: { createdAt: -1 } },
       { $lookup: { from: 'Auth', localField: 'authId', foreignField: '_id', as: 'authId' } },
       { $unwind: '$authId' },
       { $project: this.aggregateProject() }
@@ -92,14 +94,14 @@ class UserService {
       { $match: { _id: { $ne: new mongoose.Types.ObjectId(userId) } } },
       { $lookup: { from: 'Auth', localField: 'authId', foreignField: '_id', as: 'authId' } },
       { $unwind: '$authId' },
-      { $sample: { size: 10 }},
+      { $sample: { size: 10 } },
       {
         $addFields: {
           username: '$authId.username',
           email: '$authId.email',
           avatarColor: '$authId.avatarColor',
           uId: '$authId.uId',
-          createdAt: '$authId.createdAt',
+          createdAt: '$authId.createdAt'
         }
       },
       {
@@ -131,7 +133,7 @@ class UserService {
   public async searchUsers(regex: RegExp): Promise<ISearchUser[]> {
     const users = await AuthModel.aggregate([
       //Return every other documents not equal to userId using the $ne operator
-      { $match: { username: regex } } ,
+      { $match: { username: regex } },
       { $lookup: { from: 'User', localField: '_id', foreignField: 'authId', as: 'user' } },
       { $unwind: '$user' },
       {

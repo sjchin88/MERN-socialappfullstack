@@ -1,4 +1,4 @@
-import { Server} from 'socket.io';
+import { Server } from 'socket.io';
 
 // Use this to emit the event inside the controller outside the socketioposthandler class
 let socketIONotificationObject: Server;

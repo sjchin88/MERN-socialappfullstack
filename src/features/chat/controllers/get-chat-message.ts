@@ -29,7 +29,7 @@ export class Get {
       messages = await chatService.getMessages(
         new mongoose.Types.ObjectId(req.currentUser!.userId),
         new mongoose.Types.ObjectId(receiverId),
-        { createdAt: 1}
+        { createdAt: 1 }
       );
     }
     res.status(HTTP_STATUS.OK).json({ message: 'User chat messages', messages });

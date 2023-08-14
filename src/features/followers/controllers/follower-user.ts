@@ -12,14 +12,13 @@ import { socketIOFollowerObject } from '@socket/follower';
 const followerCache: FollowerCache = new FollowerCache();
 const userCache: UserCache = new UserCache();
 
-
 export class Add {
   public async follower(req: Request, res: Response): Promise<void> {
     const { followeeId } = req.params;
     // update count in cache
-    const followersCount: Promise<void> = followerCache.updateFollowersCountInCache(`${followeeId}`, 'followersCount', 1 );
+    const followersCount: Promise<void> = followerCache.updateFollowersCountInCache(`${followeeId}`, 'followersCount', 1);
     // followerId is the same as req.currentUser!.userId
-    const followeeeCount: Promise<void> = followerCache.updateFollowersCountInCache(`${req.currentUser!.userId}`, 'followingCount', 1 );
+    const followeeeCount: Promise<void> = followerCache.updateFollowersCountInCache(`${req.currentUser!.userId}`, 'followingCount', 1);
     await Promise.all([followersCount, followeeeCount]);
 
     const cachedFollowee: Promise<IUserDocument> = userCache.getUserFromCache(followeeId) as Promise<IUserDocument>;
@@ -58,5 +57,4 @@ export class Add {
       userProfile: user
     };
   }
-
 }

@@ -3,7 +3,6 @@ import Logger from 'bunyan';
 import { config } from '@root/config';
 import { imageService } from '@service/db/image.service';
 
-
 const log: Logger = config.createLogger('imageWorker');
 
 class ImageWorker {

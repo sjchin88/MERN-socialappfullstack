@@ -157,12 +157,12 @@ export class UserCache extends BaseCache {
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
       // based on values from ZRANGE, get the user info one by one
       for (const key of response) {
-        if(key !== excludedUserKey) {
+        if (key !== excludedUserKey) {
           //Retrieve all hashset using multi.HGETALL
           multi.HGETALL(`users:${key}`);
         }
       }
-      const replies: UserCacheMultiType = await multi.exec() as UserCacheMultiType;
+      const replies: UserCacheMultiType = (await multi.exec()) as UserCacheMultiType;
       const userReplies: IUserDocument[] = [];
       for (const reply of replies as IUserDocument[]) {
         reply.createdAt = new Date(Helpers.parseJson(`${reply.createdAt}`));
@@ -198,16 +198,16 @@ export class UserCache extends BaseCache {
       const followers: string[] = await this.client.LRANGE(`followers:${userId}`, 0, -1);
       const users: string[] = await this.client.ZRANGE('user', 0, -1);
       const randomUsers: string[] = Helpers.shuffle(users).slice(0, 10);
-      for(const key of randomUsers) {
+      for (const key of randomUsers) {
         const followerIndex = indexOf(followers, key);
         if (followerIndex < 0) {
-          const userHash: IUserDocument = await this.client.HGETALL(`users:${key}`) as unknown as IUserDocument;
+          const userHash: IUserDocument = (await this.client.HGETALL(`users:${key}`)) as unknown as IUserDocument;
           replies.push(userHash);
         }
       }
       const excludedUsernameIndex: number = findIndex(replies, ['username', excludedUsername]);
       replies.splice(excludedUsernameIndex, 1);
-      for(const reply of replies) {
+      for (const reply of replies) {
         reply.createdAt = new Date(Helpers.parseJson(`${reply.createdAt}`));
         reply.postsCount = Helpers.parseJson(`${reply.postsCount}`);
         reply.blocked = Helpers.parseJson(`${reply.blocked}`);
@@ -234,7 +234,7 @@ export class UserCache extends BaseCache {
       }
       const dataToSave: string[] = [`${prop}`, JSON.stringify(value)];
       await this.client.HSET(`users:${userId}`, dataToSave);
-      const response: IUserDocument = await this.getUserFromCache(userId) as IUserDocument;
+      const response: IUserDocument = (await this.getUserFromCache(userId)) as IUserDocument;
       return response;
     } catch (error) {
       log.error(error);

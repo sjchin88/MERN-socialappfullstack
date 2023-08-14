@@ -2,7 +2,6 @@ import { BaseQueue } from '@service/queues/base.queue';
 import { blockUserWorker } from '@worker/blocked.worker';
 import { IBlockedUserJobData } from '@follower/interfaces/follower.interface';
 
-
 class BlockedUserQueue extends BaseQueue {
   constructor() {
     super('blockedUser');

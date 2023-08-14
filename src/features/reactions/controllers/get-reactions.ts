@@ -23,20 +23,16 @@ export class Get {
     const reactions: [IReactionDocument, number] | [] = cachedReaction.length
       ? cachedReaction
       : await reactionService.getSinglePostReactionByUsername(postId, username);
-    res
-      .status(HTTP_STATUS.OK)
-      .json({
-        message: 'Single post reaction by username',
-        reactions: reactions.length ? reactions[0] : {},
-        count: reactions.length ? reactions[1] : 0
-      });
+    res.status(HTTP_STATUS.OK).json({
+      message: 'Single post reaction by username',
+      reactions: reactions.length ? reactions[0] : {},
+      count: reactions.length ? reactions[1] : 0
+    });
   }
 
   public async reactionsByUsername(req: Request, res: Response): Promise<void> {
     const { username } = req.params;
     const reactions: IReactionDocument[] = await reactionService.getReactionsByUsername(username);
-    res
-      .status(HTTP_STATUS.OK)
-      .json({message: 'All user reactions by username', reactions});
+    res.status(HTTP_STATUS.OK).json({ message: 'All user reactions by username', reactions });
   }
 }

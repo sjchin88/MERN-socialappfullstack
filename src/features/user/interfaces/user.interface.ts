@@ -28,7 +28,6 @@ export interface IUserDocument extends Document {
   createdAt?: Date;
 }
 
-
 export interface IResetPasswordParams {
   username: string;
   email: string;

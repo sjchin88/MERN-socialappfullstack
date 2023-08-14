@@ -37,9 +37,9 @@ export class Add {
     let fileUrl = '';
     const messageObjectId: ObjectId = new ObjectId();
     //TODO Improvement - check if conversation existed between the users
-    const conversationObjectId: ObjectId = !conversationId ? new ObjectId() : new mongoose.Types.ObjectId(conversationId); ;
-    const sender: IUserDocument = await userCache.getUserFromCache(`${req.currentUser!.userId}`) as IUserDocument;
-    if(selectedImage.length) {
+    const conversationObjectId: ObjectId = !conversationId ? new ObjectId() : new mongoose.Types.ObjectId(conversationId);
+    const sender: IUserDocument = (await userCache.getUserFromCache(`${req.currentUser!.userId}`)) as IUserDocument;
+    if (selectedImage.length) {
       const result: UploadApiResponse = (await uploads(req.body.image, req.currentUser!.userId, true, true)) as UploadApiResponse;
       if (!result?.public_id) {
         throw new BadRequestError(result.message);
@@ -69,7 +69,7 @@ export class Add {
     };
     Add.prototype.emitSocketIOEvent(messageData);
 
-    if(!isRead){
+    if (!isRead) {
       Add.prototype.messageNotification({
         currentUser: req.currentUser!,
         message: body,
@@ -111,8 +111,8 @@ export class Add {
   }
 
   private async messageNotification({ currentUser, message, receiverName, receiverId }: IMessageNotification): Promise<void> {
-    const cachedUser: IUserDocument = await userCache.getUserFromCache(`${receiverId}`) as IUserDocument;
-    if(cachedUser.notifications.messages){
+    const cachedUser: IUserDocument = (await userCache.getUserFromCache(`${receiverId}`)) as IUserDocument;
+    if (cachedUser.notifications.messages) {
       const templateParams: INotificationTemplate = {
         username: receiverName,
         message,
@@ -120,8 +120,11 @@ export class Add {
       };
 
       const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
-      emailQueue.addEmailJob('directMessageEmail', { receiverEmail: cachedUser.email!, template, subject: `You've received messages from ${currentUser.username}` });
+      emailQueue.addEmailJob('directMessageEmail', {
+        receiverEmail: cachedUser.email!,
+        template,
+        subject: `You've received messages from ${currentUser.username}`
+      });
     }
-
   }
 }

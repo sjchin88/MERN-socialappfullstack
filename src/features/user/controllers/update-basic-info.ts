@@ -16,7 +16,7 @@ export class Edit {
       key: `${req.currentUser!.userId}`,
       value: req.body
     });
-    res.status(HTTP_STATUS.OK).json({ message: 'Updated successfully'});
+    res.status(HTTP_STATUS.OK).json({ message: 'Updated successfully' });
   }
 
   @joiValidation(socialLinksSchema)
@@ -26,6 +26,6 @@ export class Edit {
       key: `${req.currentUser!.userId}`,
       value: req.body
     });
-    res.status(HTTP_STATUS.OK).json({ message: 'Updated successfully'});
+    res.status(HTTP_STATUS.OK).json({ message: 'Updated successfully' });
   }
 }

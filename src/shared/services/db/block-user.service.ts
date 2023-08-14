@@ -27,7 +27,7 @@ class BlockUserService {
             } as PushOperator<Document>
           }
         }
-      },
+      }
     ]);
   }
 
@@ -37,7 +37,7 @@ class BlockUserService {
       {
         updateOne: {
           //use filter to find id matching userId
-          filter: { _id: userId},
+          filter: { _id: userId },
           update: {
             $pull: {
               blocked: new mongoose.Types.ObjectId(followerId)
@@ -48,14 +48,14 @@ class BlockUserService {
       {
         updateOne: {
           //use filter to find id matching userId
-          filter: { _id: followerId},
+          filter: { _id: followerId },
           update: {
             $pull: {
               blockedBy: new mongoose.Types.ObjectId(userId)
             } as PullOperator<Document>
           }
         }
-      },
+      }
     ]);
   }
 }

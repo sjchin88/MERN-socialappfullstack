@@ -3,9 +3,7 @@ import HTTP_STATUS from 'http-status-codes';
 import { Request, Response } from 'express';
 import { FollowerCache } from '@service/redis/follower.cache';
 
-
 const followerCache: FollowerCache = new FollowerCache();
-
 
 export class AddUser {
   public async block(req: Request, res: Response): Promise<void> {
@@ -33,7 +31,7 @@ export class AddUser {
   }
 
   private async updateBlockedUser(followerId: string, userId: string, type: 'block' | 'unblock'): Promise<void> {
-    const blocked : Promise<void> = followerCache.updateBlockedUserPropInCache(`${userId}`, 'blocked', `${followerId}`, type);
+    const blocked: Promise<void> = followerCache.updateBlockedUserPropInCache(`${userId}`, 'blocked', `${followerId}`, type);
     const blockedBy: Promise<void> = followerCache.updateBlockedUserPropInCache(`${followerId}`, 'blockedBy', `${userId}`, type);
     await Promise.all([blocked, blockedBy]);
   }

@@ -6,10 +6,10 @@ import { blockUserService } from '@service/db/block-user.service';
 const log: Logger = config.createLogger('blockUserWorker');
 
 class BlockUserWorker {
-  async addBlockedUserToDB (job: Job, done: DoneCallback): Promise<void> {
+  async addBlockedUserToDB(job: Job, done: DoneCallback): Promise<void> {
     try {
       const { keyOne, keyTwo, type } = job.data;
-      if(type === 'block') {
+      if (type === 'block') {
         await blockUserService.blockUser(keyOne, keyTwo);
       } else {
         await blockUserService.unblockUser(keyOne, keyTwo);

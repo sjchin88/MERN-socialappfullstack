@@ -1,4 +1,3 @@
-
 import { authMiddleware } from '@global/helpers/auth-middleware';
 import { Delete } from '@notification/controllers/delete-notification';
 import { Get } from '@notification/controllers/get-notifications';

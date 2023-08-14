@@ -10,7 +10,7 @@ const log: Logger = config.createLogger('setupDatabase');
 /** export an anonymous function, so when import we can use any name */
 export default () => {
   const connect = () => {
-    mongoose.set('strictQuery',true);
+    mongoose.set('strictQuery', true);
     mongoose
       .connect(`${config.DATABASE_URL}`)
       .then(() => {

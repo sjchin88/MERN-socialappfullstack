@@ -2,8 +2,6 @@
 import { AuthPayload, IAuthDocument } from '@auth/interfaces/auth.interface';
 import { Response } from 'express';
 
-
-
 export const authMockRequest = (sessionData: IJWT, body: IAuthMock, currentUser?: AuthPayload | null, params?: any) => ({
   session: sessionData,
   body,
@@ -46,7 +44,6 @@ export interface IAuthMock {
   reactions?: boolean;
   comments?: boolean;
   follows?: boolean;
-
 }
 
 export const authUserPayload: AuthPayload = {
