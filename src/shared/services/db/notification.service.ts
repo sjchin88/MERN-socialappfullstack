@@ -1,10 +1,9 @@
-
 import { INotificationDocument } from '@notification/interfaces/notification.interface';
 import { NotificationModel } from '@notification/models/notification.schema';
 import mongoose from 'mongoose';
 
 class NotificationService {
-  public async getNotifications(userId: string): Promise<INotificationDocument[]>{
+  public async getNotifications(userId: string): Promise<INotificationDocument[]> {
     const notifications: INotificationDocument[] = await NotificationModel.aggregate([
       { $match: { userTo: new mongoose.Types.ObjectId(userId) } },
       { $lookup: { from: 'User', localField: 'userFrom', foreignField: '_id', as: 'userFrom' } },
@@ -31,7 +30,7 @@ class NotificationService {
             profilePicture: '$userFrom.profilePicture',
             username: '$authId.username',
             avatarColor: '$authId.avatarColor',
-            uId: '$authId.uId',
+            uId: '$authId.uId'
           }
         }
       }
@@ -40,7 +39,7 @@ class NotificationService {
   }
 
   public async updateNotification(notificationId: string): Promise<void> {
-    await NotificationModel.updateOne({ _id: notificationId }, { $set: { read: true }}).exec();
+    await NotificationModel.updateOne({ _id: notificationId }, { $set: { read: true } }).exec();
   }
 
   public async deleteNotification(notificationId: string): Promise<void> {

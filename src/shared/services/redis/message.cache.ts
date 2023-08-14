@@ -22,15 +22,15 @@ export class MessageCache extends BaseCache {
       }
       //try to get the userChatList for the sender
       const userChatList = await this.client.LRANGE(`chatList:${senderId}`, 0, -1);
-      if(userChatList.length === 0) {
+      if (userChatList.length === 0) {
         //if sender is not on the list, push sender key and receiver Id to the list
-        await this.client.RPUSH(`chatList:${senderId}`, JSON.stringify({ receiverId, conversationId}));
+        await this.client.RPUSH(`chatList:${senderId}`, JSON.stringify({ receiverId, conversationId }));
       } else {
         //check if receiver is on the list
         const receiverIndex: number = findIndex(userChatList, (listItem: string) => listItem.includes(receiverId));
         if (receiverIndex < 0) {
           //if the receiver is not on the list, add receiver and conversation id to the sender's list
-          await this.client.RPUSH(`chatList:${senderId}`, JSON.stringify({ receiverId, conversationId}));
+          await this.client.RPUSH(`chatList:${senderId}`, JSON.stringify({ receiverId, conversationId }));
         }
       }
     } catch (error) {
@@ -109,7 +109,7 @@ export class MessageCache extends BaseCache {
       for (const item of userChatList) {
         const chatItem: IChatList = Helpers.parseJson(item) as IChatList;
         // Get the last item
-        const lastMessage: string = await this.client.LINDEX(`messages:${chatItem.conversationId}`, -1) as string;
+        const lastMessage: string = (await this.client.LINDEX(`messages:${chatItem.conversationId}`, -1)) as string;
         conversationChatList.push(Helpers.parseJson(lastMessage));
       }
       return conversationChatList;
@@ -128,7 +128,7 @@ export class MessageCache extends BaseCache {
       const userChatList: string[] = await this.client.LRANGE(`chatList:${senderId}`, 0, -1);
       const receiver: string = find(userChatList, (listItem: string) => listItem.includes(receiverId)) as string;
       const parsedReceiver: IChatList = Helpers.parseJson(receiver) as IChatList;
-      if(parsedReceiver) {
+      if (parsedReceiver) {
         const userMessages: string[] = await this.client.LRANGE(`messages:${parsedReceiver.conversationId}`, 0, -1);
         const chatMessages: IMessageData[] = [];
         for (const item of userMessages) {
@@ -163,7 +163,7 @@ export class MessageCache extends BaseCache {
       }
       await this.client.LSET(`messages:${receiver.conversationId}`, index, JSON.stringify(chatItem));
       //alternative, straight away send the chatItem back to client
-      const lastMessage: string = await this.client.LINDEX(`messages:${receiver.conversationId}`, index) as string;
+      const lastMessage: string = (await this.client.LINDEX(`messages:${receiver.conversationId}`, index)) as string;
       return Helpers.parseJson(lastMessage) as IMessageData;
     } catch (error) {
       log.error(error);
@@ -173,7 +173,7 @@ export class MessageCache extends BaseCache {
 
   public async updateChatMessages(senderId: string, receiverId: string): Promise<IMessageData> {
     try {
-      if(!this.client.isOpen) {
+      if (!this.client.isOpen) {
         await this.client.connect();
       }
       //Get the chatlist to get the receiver
@@ -185,13 +185,13 @@ export class MessageCache extends BaseCache {
       //Filter out unreadMessages, then update the message
       //TODO : possible to get original index using filter so we can
       const unreadMessages: string[] = filter(messages, (listItem: string) => !Helpers.parseJson(listItem).isRead);
-      for(const item of unreadMessages) {
+      for (const item of unreadMessages) {
         const chatItem = Helpers.parseJson(item) as IMessageData;
         const index = findIndex(messages, (listItem: string) => listItem.includes(`${chatItem._id}`));
         chatItem.isRead = true;
         await this.client.LSET(`messages:${chatItem.conversationId}`, index, JSON.stringify(chatItem));
       }
-      const lastMessage: string = await this.client.LINDEX(`messages:${parsedReceiver.conversationId}`, -1) as string;
+      const lastMessage: string = (await this.client.LINDEX(`messages:${parsedReceiver.conversationId}`, -1)) as string;
       return Helpers.parseJson(lastMessage) as IMessageData;
     } catch (error) {
       log.error(error);
@@ -207,20 +207,20 @@ export class MessageCache extends BaseCache {
     type: 'add' | 'remove'
   ): Promise<IMessageData> {
     try {
-      if(!this.client.isOpen) {
+      if (!this.client.isOpen) {
         await this.client.connect();
       }
       //retrieve the message from redis
       const messages: string[] = await this.client.LRANGE(`messages:${conversationId}`, 0, -1);
       const messageIndex: number = findIndex(messages, (listItem: string) => listItem.includes(messageId));
-      const message: string = await this.client.LINDEX(`messages:${conversationId}`, messageIndex) as string;
+      const message: string = (await this.client.LINDEX(`messages:${conversationId}`, messageIndex)) as string;
       const parsedMessage: IMessageData = Helpers.parseJson(message) as IMessageData;
       //update the reaction
       const reactions: IReaction[] = [];
-      if(parsedMessage) {
+      if (parsedMessage) {
         //remove original reaction
         remove(parsedMessage.reaction, (reaction: IReaction) => reaction.senderName === senderName);
-        if(type === 'add') {
+        if (type === 'add') {
           //add new reaction
           reactions.push({ senderName, type: reaction });
           parsedMessage.reaction = [...parsedMessage.reaction, ...reactions];
@@ -229,7 +229,7 @@ export class MessageCache extends BaseCache {
           await this.client.LSET(`messages:${conversationId}`, messageIndex, JSON.stringify(parsedMessage));
         }
       }
-      const updatedMessage: string = await this.client.LINDEX(`messages:${conversationId}`, messageIndex) as string;
+      const updatedMessage: string = (await this.client.LINDEX(`messages:${conversationId}`, messageIndex)) as string;
       return Helpers.parseJson(updatedMessage) as IMessageData;
     } catch (error) {
       log.error(error);

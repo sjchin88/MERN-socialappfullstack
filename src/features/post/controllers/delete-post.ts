@@ -8,7 +8,6 @@ const postCache: PostCache = new PostCache();
 
 export class Delete {
   public async post(req: Request, res: Response): Promise<void> {
-
     //delete from cache
     await postCache.deletePostFromCache(req.params.postId, `${req.currentUser!.userId}`);
     //emit event

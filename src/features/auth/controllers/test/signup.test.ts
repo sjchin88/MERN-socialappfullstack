@@ -31,16 +31,19 @@ describe('SignUp', () => {
   /**
    * describe one test
    * Format: it(Test remark(verbose))
-  */
+   */
   it('should throw an error if username is not available', () => {
     //Use authMockRequest and authMockResponse to simulate req and res
-    const req: Request = authMockRequest({}, {
-      username: '',
-      email: 'tyson.braun@ethereal.email',
-      password: 'qwerty',
-      avatarColor: 'red',
-      avatarImage: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='
-    }) as Request;
+    const req: Request = authMockRequest(
+      {},
+      {
+        username: '',
+        email: 'tyson.braun@ethereal.email',
+        password: 'qwerty',
+        avatarColor: 'red',
+        avatarImage: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='
+      }
+    ) as Request;
     const res: Response = authMockResponse();
 
     //test the create method in signup controller
@@ -125,13 +128,16 @@ describe('SignUp', () => {
 
   it('should throw an error if password is not available', () => {
     //Use authMockRequest and authMockResponse to simulate req and res
-    const req: Request = authMockRequest({}, {
-      username: 'tyson',
-      email: 'tyson.braun@ethereal.email',
-      password: '',
-      avatarColor: 'red',
-      avatarImage: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='
-    }) as Request;
+    const req: Request = authMockRequest(
+      {},
+      {
+        username: 'tyson',
+        email: 'tyson.braun@ethereal.email',
+        password: '',
+        avatarColor: 'red',
+        avatarImage: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='
+      }
+    ) as Request;
     const res: Response = authMockResponse();
 
     //test the create method in signup controller
@@ -178,15 +184,17 @@ describe('SignUp', () => {
     });
   });
 
-
   it('should throw an unauthorize error if user already exist', () => {
-    const req: Request = authMockRequest({}, {
-      username: 'tyson',
-      email: 'tyson.braun@ethereal.email',
-      password: 'qwerty',
-      avatarColor: 'red',
-      avatarImage: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='
-    }) as Request;
+    const req: Request = authMockRequest(
+      {},
+      {
+        username: 'tyson',
+        email: 'tyson.braun@ethereal.email',
+        password: 'qwerty',
+        avatarColor: 'red',
+        avatarImage: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='
+      }
+    ) as Request;
     const res: Response = authMockResponse();
 
     //mock the called function return value, authMock is the simulated return data
@@ -198,20 +206,23 @@ describe('SignUp', () => {
     });
   });
 
-  it('should set session data for valid credentials and send correct json response', async() => {
-    const req: Request = authMockRequest({}, {
-      username: 'tyson',
-      email: 'tyson.braun@ethereal.email',
-      password: 'qwerty',
-      avatarColor: 'red',
-      avatarImage: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='
-    }) as Request;
+  it('should set session data for valid credentials and send correct json response', async () => {
+    const req: Request = authMockRequest(
+      {},
+      {
+        username: 'tyson',
+        email: 'tyson.braun@ethereal.email',
+        password: 'qwerty',
+        avatarColor: 'red',
+        avatarImage: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='
+      }
+    ) as Request;
     const res: Response = authMockResponse();
 
     const userSpy = jest.spyOn(UserCache.prototype, 'saveUserToCache');
     //mock the called function return value, authMock is the simulated return data
     jest.spyOn(authService, 'getUserByUsernameOrEmail').mockResolvedValue(null as any);
-    jest.spyOn(cloudinaryUploads, 'uploads').mockImplementation((): any => Promise.resolve({ version: '12334455', public_id: '123455'}));
+    jest.spyOn(cloudinaryUploads, 'uploads').mockImplementation((): any => Promise.resolve({ version: '12334455', public_id: '123455' }));
 
     await SignUp.prototype.create(req, res);
     expect(req.session?.jwt).toBeDefined();

@@ -15,7 +15,7 @@ import { map } from 'lodash';
 
 const userCache: UserCache = new UserCache();
 
-class FollowerService{
+class FollowerService {
   public async addFollowerToDB(userId: string, followeeId: string, username: string, followerDocumentId: ObjectId): Promise<void> {
     const followeeObjectId: ObjectId = new mongoose.Types.ObjectId(followeeId);
     const followerObjectId: ObjectId = new mongoose.Types.ObjectId(userId);
@@ -42,10 +42,10 @@ class FollowerService{
           filter: { _id: followeeId },
           update: { $inc: { followersCount: 1 } }
         }
-      },
+      }
     ]);
 
-    const response: [BulkWriteResult, IUserDocument | null ] = await Promise.all([users, userCache.getUserFromCache(followeeId)]);
+    const response: [BulkWriteResult, IUserDocument | null] = await Promise.all([users, userCache.getUserFromCache(followeeId)]);
 
     //if IUserDocument.notification.comment setting is true
     if (response[1]?.notifications.follows && userId !== followeeId) {
@@ -75,7 +75,11 @@ class FollowerService{
       };
 
       const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
-      emailQueue.addEmailJob('followersEmail', { receiverEmail: response[1].email!, template, subject: `${username} is now following you.` });
+      emailQueue.addEmailJob('followersEmail', {
+        receiverEmail: response[1].email!,
+        template,
+        subject: `${username} is now following you.`
+      });
     }
   }
 
@@ -103,7 +107,7 @@ class FollowerService{
           filter: { _id: followeeId },
           update: { $inc: { followersCount: -1 } }
         }
-      },
+      }
     ]);
 
     await Promise.all([unfollow, users]);
@@ -132,7 +136,7 @@ class FollowerService{
           followingCount: '$followeeId.followingCount',
           profilePicture: '$followeeId.profilePicture',
           uId: '$authId.uId',
-          userProfile: '$followeeId',
+          userProfile: '$followeeId'
         }
       },
       {
@@ -141,7 +145,7 @@ class FollowerService{
           followerId: 0,
           followeeId: 0,
           createdAt: 0,
-          __v:0
+          __v: 0
         }
       }
     ]);
@@ -171,7 +175,7 @@ class FollowerService{
           followingCount: '$followerId.followingCount',
           profilePicture: '$followerId.profilePicture',
           uId: '$authId.uId',
-          userProfile: '$followerId',
+          userProfile: '$followerId'
         }
       },
       {
@@ -180,7 +184,7 @@ class FollowerService{
           followerId: 0,
           followeeId: 0,
           createdAt: 0,
-          __v:0
+          __v: 0
         }
       }
     ]);
@@ -189,7 +193,7 @@ class FollowerService{
 
   public async getFollowersIds(userId: string): Promise<string[]> {
     const follower = await FollowerModel.aggregate([
-      { $match: { followeeId: new mongoose.Types.ObjectId(userId) }},
+      { $match: { followeeId: new mongoose.Types.ObjectId(userId) } },
       {
         $project: {
           followerId: 1,

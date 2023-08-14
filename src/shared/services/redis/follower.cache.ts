@@ -22,7 +22,7 @@ export class FollowerCache extends BaseCache {
    * @param key redis key, option of followers:followeeId (case1) or following:followerId (case2)
    * @param value id of particular user , option of followerId(case1) or followeeId(case2)
    */
-  public async saveFollowerToCache(key: string, value: string) : Promise<void> {
+  public async saveFollowerToCache(key: string, value: string): Promise<void> {
     try {
       //Check if the client is open
       if (!this.client.isOpen) {
@@ -30,7 +30,6 @@ export class FollowerCache extends BaseCache {
       }
 
       await this.client.LPUSH(key, value);
-
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
@@ -42,7 +41,7 @@ export class FollowerCache extends BaseCache {
    * @param key
    * @param value id of particular user (follower)
    */
-  public async removeFollowerFromCache(key: string, value: string) : Promise<void> {
+  public async removeFollowerFromCache(key: string, value: string): Promise<void> {
     try {
       //Check if the client is open
       if (!this.client.isOpen) {
@@ -50,7 +49,6 @@ export class FollowerCache extends BaseCache {
       }
 
       await this.client.LREM(key, 1, value);
-
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
@@ -58,12 +56,12 @@ export class FollowerCache extends BaseCache {
   }
 
   /**
-  * Update followers count property
-  * @param userId
-  * @param prop Either put followers or following
-  * @param value Either put +1 (for adding) or -1 (for removing)
-  */
-  public async updateFollowersCountInCache(userId: string, prop: string, value: number) : Promise<void> {
+   * Update followers count property
+   * @param userId
+   * @param prop Either put followers or following
+   * @param value Either put +1 (for adding) or -1 (for removing)
+   */
+  public async updateFollowersCountInCache(userId: string, prop: string, value: number): Promise<void> {
     try {
       //Check if the client is open
       if (!this.client.isOpen) {
@@ -71,15 +69,13 @@ export class FollowerCache extends BaseCache {
       }
       //increment the prop field value associated with the userId by the value amount ,
       await this.client.HINCRBY(`users:${userId}`, prop, value);
-
-
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
     }
   }
 
-  public async getFollowersFromCache(key: string) : Promise<IFollowerData[]> {
+  public async getFollowersFromCache(key: string): Promise<IFollowerData[]> {
     try {
       //Check if the client is open
       if (!this.client.isOpen) {
@@ -87,8 +83,8 @@ export class FollowerCache extends BaseCache {
       }
       const response: string[] = await this.client.LRANGE(key, 0, -1);
       const list: IFollowerData[] = [];
-      for(const item of response) {
-        const user: IUserDocument = await userCache.getUserFromCache(item) as IUserDocument;
+      for (const item of response) {
+        const user: IUserDocument = (await userCache.getUserFromCache(item)) as IUserDocument;
         const data: IFollowerData = {
           _id: new mongoose.Types.ObjectId(user._id),
           username: user.username!,
@@ -110,13 +106,13 @@ export class FollowerCache extends BaseCache {
     }
   }
 
-  public async updateBlockedUserPropInCache(key: string, prop: string, value: string, type: 'block' | 'unblock') : Promise<void> {
+  public async updateBlockedUserPropInCache(key: string, prop: string, value: string, type: 'block' | 'unblock'): Promise<void> {
     try {
       //Check if the client is open
       if (!this.client.isOpen) {
         await this.client.connect();
       }
-      const response: string = await this.client.HGET(`users:${key}`,prop) as string;
+      const response: string = (await this.client.HGET(`users:${key}`, prop)) as string;
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
       let blocked: string[] = Helpers.parseJson(response) as string[];
       if (type === 'block') {
@@ -128,7 +124,6 @@ export class FollowerCache extends BaseCache {
       const dataToSave: string[] = [`${prop}`, JSON.stringify(blocked)];
       multi.HSET(`users:${key}`, dataToSave);
       await multi.exec();
-
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');

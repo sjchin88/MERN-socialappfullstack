@@ -121,7 +121,7 @@ export class Update {
       imgId: isAddingImg ? result.public_id : '',
       imgVersion: isAddingImg ? result.version.toString() : '',
       videoId: !isAddingImg ? result.public_id : '',
-      videoVersion: !isAddingImg ? result.version.toString() : '',
+      videoVersion: !isAddingImg ? result.version.toString() : ''
     } as IPostDocument;
 
     const postUpdated: IPostDocument = await postCache.updatePostInCache(postId, updatedPost);
@@ -129,7 +129,7 @@ export class Update {
     socketIOPostObject.emit('update post', postUpdated, 'posts');
     //add job to queue
     postQueue.addPostJob('updatePostInDB', { key: postId, value: postUpdated });
-    if(isAddingImg){
+    if (isAddingImg) {
       imageQueue.addImageJob('addImageToDB', {
         key: `${req.currentUser!.userId}`,
         imgId: result.public_id,

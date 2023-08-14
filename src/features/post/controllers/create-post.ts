@@ -38,7 +38,7 @@ export class Create {
       videoVersion: '',
       videoId: '',
       createdAt: new Date(),
-      reactions: { like: 0, love: 0, happy: 0, sad: 0, wow: 0, angry: 0}
+      reactions: { like: 0, love: 0, happy: 0, sad: 0, wow: 0, angry: 0 }
     } as IPostDocument;
 
     socketIOPostObject.emit('add post', createdPost);
@@ -51,7 +51,7 @@ export class Create {
     });
 
     //Add the data to postQueue to be processed by post worker for addition to mongoDB
-    postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost});
+    postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost });
 
     res.status(HTTP_STATUS.CREATED).json({ message: 'Post created successfully' });
   }
@@ -85,7 +85,7 @@ export class Create {
       videoVersion: '',
       videoId: '',
       createdAt: new Date(),
-      reactions: { like: 0, love: 0, happy: 0, sad: 0, wow: 0, angry: 0}
+      reactions: { like: 0, love: 0, happy: 0, sad: 0, wow: 0, angry: 0 }
     } as IPostDocument;
 
     socketIOPostObject.emit('add post', createdPost);
@@ -98,9 +98,13 @@ export class Create {
     });
 
     //Add the data to postQueue to be processed by post worker for addition to mongoDB
-    postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost});
+    postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost });
     // add image to image collection
-    imageQueue.addImageJob('addImageToDB', { key: `${req.currentUser!.userId}`, imgId: result.public_id, imgVersion: result.version.toString()});
+    imageQueue.addImageJob('addImageToDB', {
+      key: `${req.currentUser!.userId}`,
+      imgId: result.public_id,
+      imgVersion: result.version.toString()
+    });
 
     res.status(HTTP_STATUS.CREATED).json({ message: 'Post created with image successfully' });
   }
@@ -134,7 +138,7 @@ export class Create {
       videoVersion: result.version.toString(),
       videoId: result.public_id,
       createdAt: new Date(),
-      reactions: { like: 0, love: 0, happy: 0, sad: 0, wow: 0, angry: 0}
+      reactions: { like: 0, love: 0, happy: 0, sad: 0, wow: 0, angry: 0 }
     } as IPostDocument;
 
     socketIOPostObject.emit('add post', createdPost);
@@ -147,7 +151,7 @@ export class Create {
     });
 
     //Add the data to postQueue to be processed by post worker for addition to mongoDB
-    postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost});
+    postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost });
 
     res.status(HTTP_STATUS.CREATED).json({ message: 'Post created with video successfully' });
   }

@@ -110,7 +110,7 @@ export class ChatServer {
 
   private async startServer(app: Application): Promise<void> {
     //if no JWT_TOKEN present
-    if(!config.JWT_TOKEN) {
+    if (!config.JWT_TOKEN) {
       throw new Error('JWT_TOKEN must be provided');
     }
     try {

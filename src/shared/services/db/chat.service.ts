@@ -8,7 +8,7 @@ class ChatService {
   public async addMessageToDB(data: IMessageData): Promise<void> {
     //check if the conversation existed in the database
     const conversation: IConversationDocument[] = await ConversationModel.find({ _id: data?.conversationId }).exec();
-    if(conversation.length === 0) {
+    if (conversation.length === 0) {
       ConversationModel.create({
         _id: data?.conversationId,
         senderId: data.senderId,
@@ -38,12 +38,14 @@ class ChatService {
 
   public async getUserConversationList(userId: ObjectId): Promise<IMessageData[]> {
     const messages: IMessageData[] = await MessageModel.aggregate([
-      { $match: { $or: [{ senderId: userId }, {receiverId: userId}]}},
+      { $match: { $or: [{ senderId: userId }, { receiverId: userId }] } },
       //Group by conversationId and return last result
-      { $group: {
-        _id: '$conversationId',
-        results: { $last: '$$ROOT' }
-      }},
+      {
+        $group: {
+          _id: '$conversationId',
+          results: { $last: '$$ROOT' }
+        }
+      },
       {
         $project: {
           _id: '$result._id',
@@ -75,18 +77,18 @@ class ChatService {
     const query = {
       $or: [
         { senderId, receiverId },
-        { senderId: receiverId, receiverId: senderId },
+        { senderId: receiverId, receiverId: senderId }
       ]
     };
-    const messages: IMessageData[] = await MessageModel.aggregate([{ $match: query}, { $sort: sort }]);
+    const messages: IMessageData[] = await MessageModel.aggregate([{ $match: query }, { $sort: sort }]);
     return messages;
   }
 
   public async markMessageAsDeleted(messageId: string, type: string): Promise<void> {
-    if(type === 'deleteForMe') {
-      await MessageModel.updateOne({ _id: messageId }, { $set: { deleteForMe: true }}).exec();
+    if (type === 'deleteForMe') {
+      await MessageModel.updateOne({ _id: messageId }, { $set: { deleteForMe: true } }).exec();
     } else {
-      await MessageModel.updateOne({ _id: messageId }, { $set: { deleteForMe: true, deleteForEveryone: true }}).exec();
+      await MessageModel.updateOne({ _id: messageId }, { $set: { deleteForMe: true, deleteForEveryone: true } }).exec();
     }
   }
 
@@ -94,17 +96,22 @@ class ChatService {
     const query = {
       $or: [
         { senderId, receiverId, isRead: false },
-        { senderId: receiverId, receiverId: senderId, isRead: false },
+        { senderId: receiverId, receiverId: senderId, isRead: false }
       ]
     };
-    await MessageModel.updateMany(query, { $set: { isRead: true }}).exec();
+    await MessageModel.updateMany(query, { $set: { isRead: true } }).exec();
   }
 
-  public async updateMessageReaction(messageId: ObjectId, senderName: string, reaction: string, actionType: 'add' | 'remove'): Promise<void> {
-    if(actionType === 'add') {
-      await MessageModel.updateOne({ _id: messageId }, { $push: { reaction: {senderName, type: reaction }}}).exec();
+  public async updateMessageReaction(
+    messageId: ObjectId,
+    senderName: string,
+    reaction: string,
+    actionType: 'add' | 'remove'
+  ): Promise<void> {
+    if (actionType === 'add') {
+      await MessageModel.updateOne({ _id: messageId }, { $push: { reaction: { senderName, type: reaction } } }).exec();
     } else {
-      await MessageModel.updateOne({ _id: messageId }, { $pull: { reaction: {senderName }}}).exec();
+      await MessageModel.updateOne({ _id: messageId }, { $pull: { reaction: { senderName } } }).exec();
     }
   }
 }

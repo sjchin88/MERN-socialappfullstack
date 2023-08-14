@@ -27,7 +27,6 @@ export class CommentCache extends BaseCache {
       count += 1;
       const dataToSave: string[] = ['commentsCount', `${count}`];
       await this.client.HSET(`posts:${postId}`, dataToSave);
-
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
@@ -42,11 +41,10 @@ export class CommentCache extends BaseCache {
       }
       const reply: string[] = await this.client.LRANGE(`comments:${postId}`, 0, -1);
       const list: ICommentDocument[] = [];
-      for(const item of reply) {
+      for (const item of reply) {
         list.push(Helpers.parseJson(item));
       }
       return list;
-
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
@@ -89,7 +87,6 @@ export class CommentCache extends BaseCache {
         return listItem._id === commentId;
       }) as unknown as ICommentDocument;
       return [result];
-
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');

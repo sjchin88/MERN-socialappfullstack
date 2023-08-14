@@ -3,8 +3,6 @@ import HTTP_STATUS from 'http-status-codes';
 import { Request, Response } from 'express';
 import { notificationQueue } from '@service/queues/notification.queue';
 
-
-
 export class Update {
   public async notification(req: Request, res: Response): Promise<void> {
     const { notificationId } = req.params;

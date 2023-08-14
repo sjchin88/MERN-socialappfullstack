@@ -21,7 +21,7 @@ export class Add {
       avatarColor: `${req.currentUser!.avatarColor}`,
       profilePicture,
       comment,
-      createdAt: new Date(),
+      createdAt: new Date()
     } as ICommentDocument;
 
     await commentCache.savePostCommentToCache(postId, JSON.stringify(commentData));
