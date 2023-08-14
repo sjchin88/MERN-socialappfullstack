@@ -1,9 +1,8 @@
+version: 2.1
 orbs:
   codecov: codecov/codecov@3.2.5
   aws-cli: circleci/aws-cli@4.0.0
   slack: circleci/slack@4.12.5
-version: 2.1
-
 executors:
   #executor name, can be rename freely
   app-executor:
@@ -184,7 +183,7 @@ jobs:
       - checkout
       - *show-current-branch-name
       - aws-cli/setup:
-          profile-name: default
+          profile_name: default
       - run:
           name: Terraform plan
           # create branch if its not exist
@@ -208,7 +207,7 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          profile-name: default
+          profile_name: default
       - *zip-project
       - run:
           name: Upload project to S3
@@ -221,7 +220,7 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          profile-name: default
+          profile_name: default
       - run:
           name: Deploy changes with AWS code deploy
           command: |
